@@ -103,7 +103,7 @@ body {
     right: 0;
     background: rgba(245, 242, 233, 0.85);
     backdrop-filter: blur(10px);
-    z-index: 1000;
+    z-index: 1003;
     transition: all 0.3s ease;
     padding: 1rem 0;
     box-shadow: 0 1px 0 rgba(0,0,0,0.05);
@@ -859,6 +859,8 @@ body {
     flex-direction: column;
     gap: 4px;
     cursor: pointer;
+    position: relative;  
+    z-index: 1002;      
 }
 
 .mobile-menu-toggle span {
