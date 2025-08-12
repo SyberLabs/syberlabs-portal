@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Catholic Creative Technologies - SyberLabs</title>
+    
+    <meta name="description" content="SyberLabs' exploration into Catholic Creative Technologies (CCT), reconciling faith and innovation.">
+    
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="cct-theme.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Space+Grotesk:wght@300;400;500;600;700&family=Crimson+Text:ital@0;1&display=swap" rel="stylesheet">
+</head>
+
+
+<body class="cct-theme">
+    <div class="loading-screen" id="loadingScreen">
+        <div class="loading-consciousness"></div>
+    </div>
+
+    <nav class="nav-wrapper" id="navWrapper">
+        <div class="container">
+            <div class="nav-container">
+                <div class="nav-logo" onclick="window.location.href='index.html'">SyberLabs</div>
+                <div class="nav">
+                    <div class="nav-item nav-item-cct" onclick="window.location.href='index.html#home'">Home</div>
+                    <div class="nav-item nav-item-cct" onclick="window.location.href='index.html#vision'">Vision</div>
+                    <div class="nav-item nav-item-cct" onclick="window.location.href='index.html#projects'">Projects</div>
+                    <div class="nav-item nav-item-cct" onclick="window.location.href='foundations-html.html'">Foundations</div>
+                    <div class="nav-item nav-item-cct active">CCT</div>
+                    <div class="nav-item nav-item-cct" onclick="window.location.href='index.html#connect'">Connect</div>
+                </div>
+                <div class="mobile-menu-toggle" onclick="toggleMobileMenu()">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <div class="mobile-menu" id="mobileMenu">
+        <div class="mobile-nav">
+            <div class="nav-item" onclick="window.location.href='index.html#home'; toggleMobileMenu()">Home</div>
+            <div class="nav-item" onclick="window.location.href='index.html#vision'; toggleMobileMenu()">Vision</div>
+            <div class="nav-item" onclick="window.location.href='index.html#projects'; toggleMobileMenu()">Projects</div>
+            <div class="nav-item active" onclick="toggleMobileMenu()">CCT</div>
+            <div class="nav-item" onclick="window.location.href='index.html#connect'; toggleMobileMenu()">Connect</div>
+        </div>
+    </div>
+
+    <main class="document-page">
+        <header class="document-header">
+            <div class="container">
+                <h1 class="document-title">Catholic Creative Technologies</h1>
+                <p class="document-subtitle">Seeking the reconciliation of technology and the human spirit through faith in Christ.</p>
+            </div>
+        </header>
+
+        <section id="sacred-heart" class="section">
+            <div class="container"> 
+                <div class="sacred-heart-wrapper">
+                    <canvas id="sacred-heart-canvas"></canvas>
+                    <div class="sacred-text title">SACRED HEART OF JESUS</div>
+                    <div class="sacred-text verse">"My Heart is moved with compassion"</div>
+                    <div class="sacred-text prayer">PRAY FOR US</div>
+                    <div class="instruction">Click to emanate light</div>
+                </div>
+            </div>
+        </section>
+
+        <section id="cct" class="section">
+            <div class="container">
+                <div class="card" style="margin-top: 2rem;">
+                    <h3>What is CCT?</h3>
+                    <p>Catholic Creative Technologies (CCT) is an exploration into the intersection of faith and innovation, seeking to reconcile the transcendent with the technological.</p>
+                    <p>We believe that true progress must be rooted in the teachings of Christ, guiding our creative endeavors towards authentic human flourishing
+                    </div>
+            
+                            <div class="card" style="margin-top: 2rem;">
+                    <h3>The Ideal Logic</h3>
+                    <p style="font-style: italic; margin-bottom: 2rem;">"Grace is in the implementation"</p>
+                    <div class="grid grid-2" style="gap: 1rem;">
+                        <div>
+                            <strong>Seek the Real Good:</strong>
+                            <p>What serves authentic flourishing?</p>
+                        </div>
+                        <div>
+                            <strong>Prioritize the Vulnerable:</strong>
+                            <p>Who has the least power here?</p>
+                        </div>
+                        <div>
+                            <strong>Choose Long-term:</strong>
+                            <p>What serves genuine development?</p>
+                        </div>
+                        <div>
+                            <strong>Act with Patience:</strong>
+                            <p>Approach with unconditional love</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="card" style="margin-top: 2rem;">
+                    <h3>"You shall know the truth, and the truth shall set you free."
+                    — John 8:32</h3>
+                    </div>
+                </div>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-bottom">
+                <p>Reconciliation through Faith in Christ</p>
+                <p>&copy; 2025 Catholic Creative Technologies.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>

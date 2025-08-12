@@ -1,0 +1,1486 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+:root {
+    --primary-gradient: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    --cyber-blue: #00d4ff;
+    --deep-blue: #1e3a8a;
+    --deep-blue-2: #3a5ab3;
+    --consciousness-purple: #9370db;
+    --text-primary: #1a202c;
+    --text-secondary: #4a5568;
+    --bg-primary: #ffffff;
+    --bg-secondary: #f7fafc;
+    --text-beige:#d4bca3;
+    --glass-bg: rgba(255, 255, 255, 0.1);
+    --glass-border: rgba(255, 255, 255, 0.2);
+    --shadow-sm: 0 2px 4px rgba(0,0,0,0.05);
+    --shadow-md: 0 4px 6px rgba(0,0,0,0.07);
+    --shadow-lg: 0 10px 15px rgba(0,0,0,0.1);
+    --shadow-xl: 0 20px 25px rgba(0,0,0,0.1);
+    --font-display: 'Space Grotesk', sans-serif;
+    --font-body: 'Inter', sans-serif;
+    --font-accent: 'Crimson Text', serif;
+
+    --cct-navy: #1d2b3f;
+    --cct-beige-text: #d4bca3;
+    --cct-beige-light: #f0e6d2;
+    --cct-border: rgba(212, 188, 163, 0.3);
+    --bg-main-beige: #f5f2e9; /* Soft beige for main background */
+
+}
+
+/* Smooth scrolling */
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    font-family: var(--font-body);
+    line-height: 1.6;
+    color: #f5f1e8;
+    min-height: 100vh;
+    overflow-x: hidden;
+    background: var(--bg-main-beige);
+}
+
+/* Loading screen */
+.loading-screen {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: var(--bg-primary);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 9999;
+    transition: opacity 0.5s ease;
+}
+
+.loading-screen.hidden {
+    opacity: 0;
+    pointer-events: none;
+}
+
+.loading-consciousness {
+    width: 100px;
+    height: 100px;
+    border: 3px solid var(--cyber-blue);
+    border-radius: 50%;
+    border-top-color: transparent;
+    animation: consciousnessLoad 1s linear infinite;
+}
+
+@keyframes consciousnessLoad {
+    to { transform: rotate(360deg); }
+}
+
+/* Container */
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+}
+
+/* Logo Wrapper */
+.logo-wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-bottom: 8.5rem; 
+}
+
+/* Sticky Navigation */
+.nav-wrapper {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    background: rgba(245, 242, 233, 0.85);
+    backdrop-filter: blur(10px);
+    z-index: 1000;
+    transition: all 0.3s ease;
+    padding: 1rem 0;
+    box-shadow: 0 1px 0 rgba(0,0,0,0.05);
+}
+
+.nav-wrapper.scrolled {
+    box-shadow: var(--shadow-md);
+    padding: 0.75rem 0;
+    background: rgba(255, 255, 255, 0.99);
+}
+
+#connect {
+  scroll-margin-top: -100px; /* This should match your nav bar's height */
+}
+#vision {
+  scroll-margin-top: 40px; /* This should match your nav bar's height */
+}
+#projects {
+  scroll-margin-top: -210px; /* This should match your nav bar's height */
+}
+
+.nav-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 2rem;
+}
+
+.nav-logo {
+    font-family: var(--font-display);
+    font-size: 1.5rem;
+    font-weight: 700;
+    background: linear-gradient(45deg, #3498db, #2980b9, #1e3a8a);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    cursor: pointer;
+    flex-shrink: 0;
+}
+
+.nav {
+    display: flex;
+    gap: 1.5rem;
+    align-items: center;
+    flex-wrap: wrap;
+    justify-content: center;
+    flex: 1;
+}
+
+.nav-item {
+    font-family: var(--font-display);
+    font-weight: 500;
+    color: var(--text-secondary);
+    cursor: pointer;
+    transition: all 0.3s ease;
+    position: relative;
+    padding: 0.5rem 0.75rem;
+    white-space: nowrap;
+}
+
+.nav-item::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0.75rem;
+    right: 0.75rem;
+    height: 2px;
+    background: var(--cyber-blue);
+    transform: scaleX(0);
+    transition: transform 0.3s ease;
+}
+
+.nav-item:hover,
+.nav-item.active {
+    color: var(--text-primary);
+}
+
+.nav-item:hover::after,
+.nav-item.active::after {
+    transform: scaleX(1);
+}
+
+/* Mode toggle */
+.mode-toggle {
+    display: flex;
+    gap: 0.5rem;
+    align-items: center;
+    font-size: 0.875rem;
+    color: var(--text-secondary);
+    cursor: pointer;
+    padding: 0.5rem 1rem;
+    border-radius: 20px;
+    background: var(--glass-bg);
+    backdrop-filter: blur(10px);
+    border: 1px solid var(--glass-border);
+    transition: all 0.3s ease;
+    white-space: nowrap;
+    flex-shrink: 0;
+}
+
+.mode-toggle:hover {
+    background: rgba(52, 152, 219, 0.1);
+    border-color: var(--cyber-blue);
+}
+
+/* Header */
+.header {
+    padding: 10rem 0 4rem 0;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+/* Synthesis styles */
+.synthesis-title {
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: 1.2rem;
+    margin-bottom: 0.75rem;
+    color: var(--text-secondary);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+
+.synthesis-title span {
+    color: var(--consciousness-purple);
+    text-shadow: 0 0 10px var(--consciousness-purple);
+}
+
+.synthesis-description {
+    font-family: var(--font-accent);
+    font-style: italic;
+    font-size: 1.1rem;
+    color: var(--text-primary);
+    line-height: 1.6;
+}
+
+/* Enhanced Logo with Consciousness Field */
+.consciousness-field {
+    position: relative;
+    width: 400px;
+    height: 400px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.field-layer {
+    position: absolute;
+    border: 2px solid;
+    border-radius: 50%;
+    opacity: 0.6;
+    animation: fieldFlow 15s linear infinite;
+}
+
+/* Innermost Ring: Vibrant Sky Blue */
+.field-layer:nth-child(1) {
+    width: 120px;
+    height: 120px;
+    border-color: #99DEFF; /* Increased saturation from pastel blue */
+    animation-delay: 0s;
+}
+
+/* Second Ring: Electric Blue */
+.field-layer:nth-child(2) {
+    width: 180px;
+    height: 180px;
+    border-color: #548CFF; /* Increased saturation from cornflower blue */
+    animation-delay: -3s;
+    animation-direction: reverse;
+}
+
+/* Third Ring: Intense Royal Blue */
+.field-layer:nth-child(3) {
+    width: 240px;
+    height: 240px;
+    border-color: #2447FF; /* Increased saturation from royal blue */
+    animation-delay: -6s;
+}
+
+/* Outermost Ring: Vibrant Navy Blue */
+.field-layer:nth-child(4) {
+    width: 300px;
+    height: 300px;
+    border-color: #0A38A8; /* Increased saturation from navy blue */
+    animation-delay: -9s;
+    animation-direction: reverse;
+    opacity: 0.7; /* Slightly increased opacity for more punch */
+}
+
+@keyframes fieldFlow {
+    0% {
+        transform: rotate(0deg) scale(1);
+        opacity: 0.6;
+    }
+    50% {
+        transform: rotate(180deg) scale(1.1);
+        opacity: 0.3;
+    }
+    100% {
+        transform: rotate(360deg) scale(1);
+        opacity: 0.6;
+    }
+}
+
+.logo-main {
+    font-family: var(--font-display);
+    font-size: 4rem;
+    font-weight: 700;
+    background: linear-gradient(45deg, #3498db, #2980b9, #1e3a8a);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    position: relative;
+    z-index: 10;
+    letter-spacing: -0.02em;
+}
+
+.tagline {
+    font-family: var(--font-accent);
+    font-size: 1.5rem;
+    color: #2F80ED;
+    font-style: italic;
+    margin-top: 1rem; /* Adjusted to bring it closer to the logo */
+    opacity: 0;
+    animation: fadeInUp 1s ease 0.2s forwards;
+}
+
+@keyframes fadeInUp {
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+}
+
+/* Hero CTA */
+.hero-cta {
+    display: flex;
+    gap: 1.5rem;
+    justify-content: center;
+    flex-wrap: wrap;
+    opacity: 0;
+    animation: fadeInUp 1s ease 0.7s forwards;
+}
+
+.cta-primary,
+.cta-secondary {
+    padding: 1rem 2rem;
+    font-family: var(--font-display);
+    font-weight: 500;
+    text-decoration: none;
+    border-radius: 50px;
+    transition: all 0.3s ease;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    border: 2px solid transparent
+}
+
+.cta-primary {
+    background: linear-gradient(135deg, #56CCF2 0%, #2F80ED 100%);
+    color: rgb(27, 21, 112);
+    box-shadow: 0 4px 15px rgba(47, 128, 237, 0.4);
+}
+
+.cta-primary:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 6px 20px rgba(47, 128, 237, 0.6);
+}
+
+
+.cta-secondary {
+    background: linear-gradient(135deg, #56CCF2 0%, #2F80ED 100%);
+    border-color: #56CCF2; /* Use the lighter blue for the border */
+    color: rgb(27, 21, 112); /* Use the darker blue for the text */
+    box-shadow: 0 4px 15px rgba(47, 128, 237, 0.4);
+}
+
+
+.cta-secondary:hover {
+    background: #56CCF2; /* Fill with the light blue on hover */
+    border-color: #56CCF2;
+    color: white;
+    transform: translateY(-3px);
+    box-shadow: 0 6px 20px rgba(86, 204, 242, 0.4);
+}
+
+/* Section Base */
+.section {
+    padding: 5rem 0;
+    opacity: 0;
+    transform: translateY(30px);
+    transition: all 0.6s ease;
+}
+
+.section.visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* Section Headers */
+.section-header {
+    text-align: center;
+    margin-bottom: 2rem;
+    position: relative; /* Add this line */
+    z-index: 2;         /* Add this line */
+}
+
+.section-title {
+    font-family: var(--font-display);
+    font-size: 3rem;
+    font-weight: 700;
+    margin-bottom: 1rem;
+    background: var(--primary-gradient);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+.section-subtitle {
+    font-family: var(--font-accent);
+    font-size: 1.5rem;
+    color: var(--deep-blue);
+    font-style: italic;
+}
+
+/* Glass Cards */
+.card {
+    background:  var(--deep-blue);
+    backdrop-filter: blur(10px);
+    border: 1px solid var(--glass-border);
+    padding: 2rem;
+    border-radius: 20px;
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+    min-width: 0;
+}
+
+.card::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: radial-gradient(circle, var(--cyber-blue) 0%, transparent 70%);
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    pointer-events: none;
+}
+
+.card:hover {
+    transform: translateY(-5px);
+    border-color: var(--cyber-blue);
+    box-shadow: 0 20px 40px rgba(0, 212, 255, 0.1);
+}
+
+.card:hover::before {
+    opacity: 0.05;
+}
+
+.card h3 {
+    font-family: var(--font-display);
+    font-size: 1.5rem;
+    margin-bottom: 1rem;
+    color: rgb(229, 223, 236);
+}
+
+.card p {
+    color: #f8f6f6;
+    line-height: 1.8;
+}
+
+/* Grid System */
+.grid {
+    display: grid;
+    gap: 2rem;
+    margin: 2rem 0;
+}
+
+.grid-2 {
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+}
+
+.grid-3 {
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+}
+
+/* Consciousness Chambers V2 */
+.chambers-container {
+    position: relative;
+    padding: 4rem 0;
+}
+
+.chamber-wrapper {
+    position: relative;
+    margin: 3rem 0;
+    opacity: 0;
+    transform: translateX(-50px);
+    transition: all 0.8s ease;
+}
+
+.chamber-wrapper.visible {
+    opacity: 1;
+    transform: translateX(0);
+}
+
+.chamber-wrapper:nth-child(even) {
+    transform: translateX(50px);
+}
+
+.chamber-wrapper:nth-child(even).visible {
+    transform: translateX(0);
+}
+
+.chamber-card {
+    background: var(--glass-bg);
+    backdrop-filter: blur(20px);
+    border: 1px solid var(--glass-border);
+    border-radius: 30px;
+    padding: 3rem;
+    display: flex;
+    align-items: center;
+    gap: 3rem;
+    position: relative;
+    overflow: hidden;
+}
+
+.chamber-visual {
+    flex: 0 0 200px;
+    height: 200px;
+    position: relative;
+}
+
+.chamber-content {
+    flex: 1;
+}
+
+.chamber-title {
+    font-family: var(--font-display);
+    font-size: 2.5rem;
+    font-weight: 700;
+    margin-bottom: 1rem;
+    background: var(--primary-gradient);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+.chamber-description {
+    color: var(--text-secondary);
+    line-height: 1.8;
+    margin-bottom: 1.5rem;
+}
+
+.chamber-features {
+    list-style: none;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+}
+
+.chamber-features li {
+    background: #2F80ED;
+    padding: 0.5rem 1rem;
+    border-radius: 20px;
+    font-size: 0.875rem;
+    color: whitesmoke;
+    border: 1px solid transparent;
+    transition: all 0.3s ease;
+}
+
+.chamber-features li:hover {
+    background: var(--consciousness-purple);
+    color: var(--cct-beige-light);
+    border-color: #660ff1;
+}
+
+/* Simplified Chamber Animations */
+.expansion-visual {
+    width: 200px;
+    height: 200px;
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.expansion-core {
+    width: 80px;
+    height: 80px;
+    background: radial-gradient(circle, #f39c12, #e74c3c);
+    border-radius: 50%;
+    position: relative;
+    animation: corePulse 3s ease-in-out infinite;
+}
+
+.expansion-ring {
+    position: absolute;
+    border: 2px solid #f39c12;
+    border-radius: 50%;
+    opacity: 0.5;
+    animation: expansionRing 4s ease-in-out infinite;
+}
+
+.expansion-ring:nth-child(2) {
+    width: 120px;
+    height: 120px;
+    animation-delay: -1s;
+}
+
+.expansion-ring:nth-child(3) {
+    width: 160px;
+    height: 160px;
+    animation-delay: -2s;
+}
+
+@keyframes corePulse {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.1); }
+}
+
+@keyframes expansionRing {
+    0% {
+        transform: scale(0.8);
+        opacity: 0.8;
+    }
+    100% {
+        transform: scale(1.5);
+        opacity: 0;
+    }
+}
+
+/* Philosophy Quote */
+.philosophy-quote {
+    background: var(--primary-gradient);
+    color: white;
+    padding: 4rem;
+    border-radius: 30px;
+    text-align: center;
+    margin: -3rem 0;
+    font-family: var(--font-accent);
+    font-size: 1.5rem;
+    font-style: italic;
+    line-height: 1.8;
+    position: relative;
+    overflow: hidden;
+}
+
+.philosophy-quote::before {
+    content: '"';
+    position: absolute;
+    top: 1rem;
+    left: 2rem;
+    font-size: 6rem;
+    opacity: 0.2;
+}
+
+/* Consciousness Meter */
+.consciousness-meter {
+    position: fixed;
+    bottom: 2rem;
+    right: 2rem;
+    background: var(--glass-bg);
+    backdrop-filter: blur(10px);
+    border: 1px solid var(--glass-border);
+    padding: 1rem;
+    border-radius: 20px;
+    width: 200px;
+    opacity: 0;
+    transform: translateY(20px);
+    transition: all 0.3s ease;
+    z-index: 100;
+}
+
+.consciousness-meter.active {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.meter-label {
+    font-size: 0.75rem;
+    color: var(--text-secondary);
+    margin-bottom: 0.5rem;
+    font-family: var(--font-display);
+}
+
+.meter-bar {
+    height: 6px;
+    background: rgba(52, 152, 219, 0.2);
+    border-radius: 3px;
+    overflow: hidden;
+}
+
+.meter-fill {
+    height: 100%;
+    background: var(--primary-gradient);
+    width: 0%;
+    transition: width 1s ease;
+    border-radius: 3px;
+}
+
+/* --- Abstract Spirit Form Animation --- */
+.mandala-wrapper {
+    width: 100%;
+    max-width: 500px; /* Controls the max size of the animation */
+    margin: 6rem auto 0; /* Centers it and adds space below */
+    margin-bottom: 0;
+    position: relative;
+    
+}
+
+#mandala {
+    width: 100%;
+    height: auto;
+    display: block;
+    filter: blur(0.5px);
+    background: var(--deep-blue); /* Changed from #050511 */
+    border-radius: 50%;
+}
+
+
+/* Project Cards Enhanced */
+.project-card {
+    background: var(--deep-blue);
+    color: var(--text-beige);
+    backdrop-filter: blur(10px);
+    border: 1px solid var(--glass-border);
+    border-radius: 20px;
+    overflow: hidden;
+    transition: all 0.3s ease;
+    position: relative;
+}
+
+.project-header {
+    padding: 2rem;
+    background: linear-gradient(135deg, rgba(102, 126, 234, 0.1), rgba(118, 75, 162, 0.1));
+    border-bottom: 1px solid var(--glass-border);
+}
+.project-header p {
+    color: var(--cct-beige-light);
+    font-size: 1rem;
+    opacity: 0.8; /* Makes it slightly less prominent */
+}
+.project-icon {
+    font-size: 2.5rem;
+    margin-bottom: 1rem;
+}
+
+.project-content {
+    
+    padding: 2rem;
+}
+
+/* New rule specifically for the paragraph text */
+.project-content p {
+    color: var(--cct-beige-light); 
+}
+
+/* New rule specifically for the list and its items */
+.project-content ul {
+    margin-top: 1rem;
+    list-style: none;
+    padding-left: 0; /* Removes default browser padding on the list */
+    
+}
+
+.project-content li {
+    color: #ffffff; /* This sets ONLY the list items to beige */
+}
+.project-header h3 {
+    color: var(--cyber-blue);
+}
+.project-status {
+    display: inline-block;
+    padding: 0.25rem 0.75rem;
+    background: rgba(46, 204, 113, 0.1);
+    color: #2ecc71;
+    border-radius: 15px;
+    font-size: 0.75rem;
+    font-weight: 600;
+    margin-top: 1rem;
+}
+
+.project-status.development {
+    background: rgba(241, 196, 15, 0.1);
+    color: #f1c40f;
+}
+
+
+
+/* Footer Enhanced */
+.footer {
+    background: linear-gradient(135deg, rgba(26, 32, 44, 0.95), rgba(45, 55, 72, 0.95));
+    color: white;
+    padding: 4rem 0 2rem;
+    margin-top: 6rem;
+    backdrop-filter: blur(10px);
+}
+
+.footer-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 3rem;
+    margin-bottom: 3rem;
+}
+
+.footer-section h4 {
+    font-family: var(--font-display);
+    font-size: 1.25rem;
+    margin-bottom: 1rem;
+    color: var(--cyber-blue);
+}
+
+.footer-section ul {
+    list-style: none;
+}
+
+.footer-section a {
+    color: rgba(255, 255, 255, 0.8);
+    text-decoration: none;
+    transition: color 0.3s ease;
+    display: inline-block;
+    padding: 0.25rem 0;
+}
+
+.footer-section a:hover {
+    color: var(--cyber-blue);
+}
+
+.footer-bottom {
+    text-align: center;
+    padding-top: 2rem;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    font-family: var(--font-accent);
+    font-style: italic;
+    color: rgba(255, 255, 255, 0.6);
+}
+
+/* Mobile Menu */
+.mobile-menu-toggle {
+    display: none;
+    flex-direction: column;
+    gap: 4px;
+    cursor: pointer;
+}
+
+.mobile-menu-toggle span {
+    width: 24px;
+    height: 2px;
+    background: var(--text-primary);
+    transition: all 0.3s ease;
+}
+
+.mobile-menu {
+    position: fixed;
+    top: 0;
+    right: -100%;
+    width: 80%;
+    max-width: 300px;
+    height: 100vh;
+    background: var(--bg-primary);
+    box-shadow: -5px 0 15px rgba(0,0,0,0.1);
+    transition: right 0.3s ease;
+    z-index: 1001;
+    padding: 2rem;
+}
+
+.mobile-menu.active {
+    right: 0;
+}
+
+.mobile-nav {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+    margin-top: 3rem;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .nav {
+        display: none;
+    }
+    
+    .mobile-menu-toggle {
+        display: flex;
+    }
+    
+    .consciousness-field {
+        width: 300px;
+        height: 300px;
+    }
+    
+    .logo-main {
+        font-size: 3rem;
+    }
+    
+    .section-title {
+        font-size: 2rem;
+    }
+    
+    .chamber-card {
+        flex-direction: column;
+        text-align: center;
+    }
+    
+    .consciousness-meter {
+        bottom: 1rem;
+        right: 1rem;
+        width: 150px;
+    }
+    
+    .demo-grid {
+        grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+    }
+}
+
+/* Accessibility */
+.sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border-width: 0;
+}
+
+/* Focus styles */
+a:focus,
+button:focus,
+.nav-item:focus,
+.concept-node:focus {
+    outline: 2px solid var(--cyber-blue);
+    outline-offset: 2px;
+}
+
+/* Reduced motion */
+@media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+    }
+}
+
+/* Print styles */
+@media print {
+    .nav-wrapper,
+    .consciousness-meter,
+    .mode-toggle,
+    .hero-cta,
+    .demo-container {
+        display: none;
+    }
+    
+    body {
+        background: white;
+        color: black;
+    }
+    
+    .card,
+    .chamber-card,
+    .project-card {
+        break-inside: avoid;
+        page-break-inside: avoid;
+    }
+}
+
+
+/* --- Sacred Heart Visualization --- */
+
+#sacred-heart {
+    padding: 5rem 0 1rem 0; /* Remove default section padding to make it full-width */
+}
+
+.sacred-heart-wrapper {
+    position: relative; /* Establishes a container for the absolute elements */
+    width: 100%;
+    height: 70vh; /* Sets the height of the animation panel. Adjust as needed. */
+    background: #000;
+    overflow: hidden; /* Ensures nothing spills out */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-family: 'Georgia', serif;
+    border-radius: 30px;
+}
+
+#sacred-heart-canvas {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 1;
+}
+
+.sacred-text {
+    position: absolute;
+    color: rgba(255, 255, 255, 0.9);
+    text-align: center;
+    z-index: 2; /* Ensures text is on top of the canvas */
+    text-shadow: 0 0 30px rgba(255, 215, 0, 0.5);
+    animation: breathe 4s infinite ease-in-out;
+    mix-blend-mode: screen;
+}
+
+.sacred-text.title {
+    top: 10%;
+    font-size: 36px;
+    letter-spacing: 6px;
+    background: linear-gradient(45deg, #FFD700, #FFF, #87CEEB);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+.sacred-text.verse {
+    bottom: 2%;
+    font-size: 20px;
+    font-style: italic;
+    max-width: 700px;
+    padding: 0 20px;
+    opacity: 0.9;
+}
+
+.sacred-text.prayer {
+    bottom: 6%;
+    font-size: 36px;
+    letter-spacing: 6px;
+    background: linear-gradient(45deg, #FFD700, #FFF, #87CEEB);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+.instruction {
+    position: absolute;
+    bottom: 30px;
+    right: 30px;
+    font-size: 14px;
+    color: rgba(255, 255, 255, 0.5);
+    z-index: 2;
+}
+
+@keyframes breathe {
+    0%, 100% { opacity: 0.7; transform: scale(1); }
+    50% { opacity: 1; transform: scale(1.02); }
+}
+
+/* Responsive adjustments for the title */
+@media (max-width: 768px) {
+    .sacred-text.title {
+        font-size: 24px;
+    }
+    .sacred-text.verse {
+        font-size: 16px;
+    }
+}
+
+/* --- Document Page Styles --- */
+
+.document-page {
+    padding-top: 100px; /* Push content below the fixed nav bar */
+}
+
+.document-header {
+    background-color: #ebe2ce; /* A subtle, warm off-white/beige */
+    padding: 4rem 0;
+    text-align: center;
+    border-bottom: 1px solid var(--glass-border);
+}
+
+.document-title {
+    font-family: var(--font-display);
+    font-size: 3.5rem;
+    font-weight: 700;
+    background: var(--primary-gradient);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    margin-bottom: 1rem;
+}
+
+.document-subtitle {
+    font-family: var(--font-accent);
+    font-size: 1.5rem;
+    color: var(--consciousness-purple);
+    font-style: italic;
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+.document-content-section {
+    padding: 4rem 0;
+}
+
+.document-container {
+    max-width: 800px; /* Use a narrower container for better readability */
+    margin: 0 auto;
+}
+
+.document-container h2 {
+    font-family: var(--font-display);
+    font-size: 2.5rem;
+    margin-top: 0;
+    margin-bottom: 1.5rem;
+    border-bottom: 2px solid var(--consciousness-purple);
+    padding-bottom: 0.5rem;
+    color: var(--deep-blue-2);
+}
+
+.document-container h3 {
+    font-family: var(--font-display);
+    font-size: 1.8rem;
+    margin-top: 2.5rem;
+    margin-bottom: 1rem;
+    color: var(--deep-blue);
+}
+
+.document-container p {
+    font-size: 1.1rem;
+    line-height: 1.8;
+    margin-bottom: 1.5rem;
+    color: var(--deep-blue);
+}
+
+.document-container blockquote {
+    border-left: 4px solid var(--consciousness-purple);
+    margin: 2rem 0;
+    padding: 1rem 2rem;
+    font-family: var(--font-accent);
+    font-style: italic;
+    font-size: 1.2rem;
+    background: var(--bg-secondary);
+    color: var(--deep-blue);
+}
+
+.document-container ul {
+    list-style: none;
+    padding-left: 0;
+}
+
+.document-container li {
+    font-size: 1.1rem;
+    margin-bottom: 1rem;
+    padding-left: 1.5rem;
+    position: relative;
+    color: var(--deep-blue);
+}
+
+.document-container li::before {
+    content: '→';
+    position: absolute;
+    left: 0;
+    color: var(--consciousness-purple);
+    font-weight: bold;
+}
+
+.project-link {
+    display: inline-block;
+    margin-top: 1rem;
+    color: var(--cyber-blue);
+    text-decoration: none;
+    font-weight: 500;
+    font-family: var(--font-display);
+}
+
+.project-link:hover {
+    text-decoration: underline;
+}
+
+/* --- Flower App Interface Styles --- */
+
+.flower-app-body {
+    background: var(--bg-secondary);
+}
+
+.flower-main-grid {
+    display: grid;
+    grid-template-columns: 300px 1fr; /* Sidebar and main content area */
+    gap: 2rem;
+    padding: 120px 2rem 2rem 2rem;
+    height: 100vh;
+}
+
+.flower-sidebar, .flower-content-area {
+    height: calc(100vh - 140px);
+    overflow-y: auto;
+}
+
+.sidebar-panel {
+    background: var(--bg-main-beige);
+    border: 1px solid var(--glass-border);
+    border-radius: 20px;
+    padding: 1.5rem;
+    margin-bottom: 2rem;
+}
+
+.sidebar-panel h3 {
+    font-family: var(--font-display);
+    margin-bottom: 1rem;
+    color: var(--deep-blue-2);
+}
+
+#card-collection-list {
+    list-style: none;
+    padding: 0;
+}
+
+#card-collection-list li {
+    background: whitesmoke;
+    padding: 0.75rem 1rem;
+    border-radius: 10px;
+    margin-bottom: 0.5rem;
+    font-weight: 500;
+    color: var(--deep-blue);
+}
+
+.exercise-text {
+    font-family: var(--font-accent);
+    font-style: italic;
+    margin-bottom: 1rem;
+    color: var(--deep-blue);
+}
+
+#reflection-questions p {
+    font-size: 0.9rem;
+    margin-bottom: 0.5rem;
+    padding-left: 1rem;
+    border-left: 2px solid var(--consciousness-purple);
+    color: var(--deep-blue-2);
+}
+
+.flower-header {
+    margin-bottom: 2rem;
+}
+
+.breadcrumb {
+    font-family: var(--font-display);
+    font-size: 0.9rem;
+    color: var(--cyber-blue);
+    
+    margin-bottom: 1rem;
+}
+
+.breadcrumb a {
+    color: var(--text-secondary);
+    text-decoration: none;
+    cursor: pointer;
+}
+
+#concept-title {
+    font-family: var(--font-display);
+    font-size: 3.5rem;
+    font-weight: 700;
+    color: var(--deep-blue);
+}
+
+.concept-summary-text {
+    font-family: var(--font-accent);
+    font-size: 1.4rem;
+    line-height: 1.7;
+    color: var(--deep-blue);
+    margin-bottom: 3rem;
+}
+
+.connections-panel h3 {
+    font-family: var(--font-display);
+    font-size: 1.5rem;
+    margin-bottom: 1.5rem;
+    border-bottom: 1px solid var(--glass-border);
+    padding-bottom: 0.5rem;
+    color: var(--deep-blue);
+}
+
+#sub-concept-list .sub-concept-item {
+    background: var(--bg-main-beige);
+    border: 1px solid var(--glass-border);
+    padding: 1.5rem;
+    border-radius: 15px;
+    margin-bottom: 1rem;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    color: var(--deep-blue);
+}
+
+#sub-concept-list .sub-concept-item:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-md);
+    border-color: var(--cyber-blue);
+}
+
+#sub-concept-list .sub-concept-item h4 {
+    font-family: var(--font-display);
+    font-size: 1.2rem;
+    margin-bottom: 0.5rem;
+}
+
+/* --- Document Page Call-to-Action Button --- */
+.document-cta {
+    text-align: center;
+    margin-top: 4rem;
+    padding-top: 2rem;
+    border-top: 1px solid var(--glass-border);
+}
+
+/* --- Flower Library Styles --- */
+.library-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+    gap: 2rem;
+}
+
+.library-card {
+    display: block;
+    background: var(--bg-primary);
+    border: 1px solid var(--glass-border);
+    border-radius: 20px;
+    padding: 2rem;
+    text-decoration: none;
+    color: var(--text-primary);
+    transition: all 0.3s ease;
+}
+
+.library-card:hover {
+    transform: translateY(-5px);
+    box-shadow: var(--shadow-lg);
+    border-color: var(--cyber-blue);
+}
+
+.library-card h3 {
+    font-family: var(--font-display);
+    font-size: 1.8rem;
+    margin-bottom: 1rem;
+}
+
+.library-card p {
+    color: var(--text-secondary);
+    line-height: 1.7;
+    margin-bottom: 2rem;
+}
+
+.library-card span {
+    font-family: var(--font-display);
+    font-weight: 500;
+    color: var(--cyber-blue);
+}
+
+/* --- Back to Library Button --- */
+.back-to-library-btn {
+    display: inline-block;
+    margin-top: 1rem; 
+    margin-bottom: 1.5rem;
+    padding: 0.5rem 1rem;
+    background: var(--bg-main-beige);
+    color: var(--text-secondary);
+    border: 1px solid var(--glass-border);
+    border-radius: 50px;
+    text-decoration: none;
+    font-family: var(--font-display);
+    font-weight: 500;
+    font-size: 0.9rem;
+    transition: all 0.2s ease;
+}
+
+.back-to-library-btn:hover {
+    background: var(--cct-beige-light);
+    color: var(--text-primary);
+    border-color: var(--cyber-blue);
+    box-shadow: var(--shadow-sm); /* Creates a subtle lifting effect */
+}
+
+/* --- Flower Library Hero Image --- */
+.library-hero-image {
+    display: block;
+    max-width: 400px; /* You can adjust this size */
+    width: 100%;
+    margin: 2rem auto; /* Centers the image and adds space */
+    border-radius: 50%; /* Makes the image circular */
+    box-shadow: 0 10px 30px rgba(147, 112, 219, 0.2); /* Adds a subtle purple glow */
+}
+
+/* --- Flower Library Hero Image --- */
+.library-logo-image {
+    display: block;
+    max-width: 200px; /* You can adjust this size */
+    width: 100%;
+    margin: left; /* Centers the image and adds space */
+    border-radius: 50%; /* Makes the image circular */
+    box-shadow: 0 10px 30px rgba(147, 112, 219, 0.2); /* Adds a subtle purple glow */
+}
+
+/* --- MVP Disclaimer Panel & Button --- */
+/* --- MVP Disclaimer Panel - Revised --- */
+.mvp-disclaimer {
+    background: #2c3e50; /* A duller, darker blue */
+    color: #e0cba8; /* A softer beige */
+    text-align: left; /* Align text to the left for top-right placement */
+    padding: 0.5rem 1rem; /* Reduced padding */
+    border-radius: 5px;
+    font-size: 0.8rem; /* Smaller font size */
+    position: absolute; /* Allows positioning relative to the viewport */
+    top: 6rem;
+    right: 2rem;
+    z-index: 100; /* Ensures it's above other elements */
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2); /* Subtle shadow */
+    opacity: 0.8; /* Slightly less prominent */
+}
+
+.mvp-disclaimer h4 {
+    font-family: var(--font-display);
+    font-size: 1rem;
+    margin-bottom: 0.2rem;
+    color: #f0e6d2; /* Slightly brighter beige for the title */
+}
+
+.mvp-disclaimer p {
+    font-size: 0.75rem;
+    color: #d4bca3;
+    margin-bottom: 0.5rem;
+}
+
+.mvp-disclaimer a.sidebar-button {
+    display: inline-block;
+    padding: 0.3rem 0.6rem;
+    background: #e0cba8; /* Beige button */
+    color: #2c3e50; /* Dull blue text */
+    border-radius: 5px;
+    text-decoration: none;
+    font-weight: 500;
+    font-size: 0.7rem;
+    transition: background-color 0.2s ease;
+}
+
+.mvp-disclaimer a.sidebar-button:hover {
+    background-color: #f0e6d2; /* Lighter beige on hover */
+    color: #233140;
+}
+
+.sidebar-button {
+    display: inline-block;
+    padding: 0.5rem 1rem;
+    background: var(--bg-primary);
+    color: var(--deep-blue);
+    border-radius: 10px;
+    text-decoration: none;
+    font-weight: 500;
+    transition: all 0.2s ease;
+}
+
+.sidebar-button:hover {
+    background: white;
+    color: black;
+    transform: scale(1.05);
+}
+
+.cct-theme .grid {
+    display: grid; /* This restores the grid behavior for CCT cards */
+}
+
+#connect .demo-container {
+    text-align: center;
+}

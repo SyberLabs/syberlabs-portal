@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Flower MVP - SyberLabs</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Space+Grotesk:wght@300;400;500;600;700&family=Crimson+Text:ital@0;1&display=swap" rel="stylesheet">
+</head>
+<body class="flower-app-body">
+    <nav class="nav-wrapper" id="navWrapper">
+        <div class="container">
+            <div class="nav-container">
+                <div class="nav-logo" onclick="window.location.href='index.html'">SyberLabs</div>
+                <div class="nav">
+                    <div class="nav-item" onclick="window.location.href='index.html#home'">Home</div>
+                    <div class="nav-item" onclick="window.location.href='index.html#vision'">Vision</div>
+                    <div class="nav-item active" onclick="window.location.href='index.html#projects'">Projects</div>
+                    <div class="nav-item" onclick="window.location.href='foundations-html.html'">Foundations</div>
+                    <div class="nav-item" onclick="window.location.href='cct.html'">CCT</div>
+                    <div class="nav-item" onclick="window.location.href='index.html#connect'">Connect</div>
+                </div>
+                <div class="mobile-menu-toggle" onclick="toggleMobileMenu()">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <main class="flower-main-grid">
+        <aside class="flower-sidebar">
+            <div class="sidebar-panel">
+                <h3>Collected Concepts</h3>
+                <ul id="card-collection-list">
+                    </ul>
+            </div>
+
+            <div class="sidebar-panel" id="synthesis-panel" style="display: none;">
+                <h3>Card Synthesis</h3>
+                <p>Select two collected concepts to discover a new, synthesized idea.</p>
+                <div class="synthesis-controls">
+                    <select id="concept-select-1"></select>
+                    <span>+</span>
+                    <select id="concept-select-2"></select>
+                </div>
+                <div id="synthesis-result"></div>
+            </div>
+            
+            <div class="sidebar-panel" id="natural-exercise-panel">
+                <h3>Natural Exercise</h3>
+                <p id="exercise-prompt" class="exercise-text"></p>
+                <div id="reflection-questions">
+                    </div>
+            </div>
+
+            <div class="sidebar-panel mvp-disclaimer">
+                <h4>Flower MVP v0.1</h4>
+                <p>This is an early prototype demonstrating the core fractal exploration mechanic.</p>
+                <a href="flower-platform.html" class="sidebar-button">Read the Foundation Document</a>
+            </div>
+        </aside>
+
+        <div class="flower-content-area">
+            <div class="flower-header">
+                <img src="./images/flower_logo_2.png" alt="Abstract fractal flower representing consciousness" class="library-logo-image">
+                <a href="flower-library.html" class="back-to-library-btn">← Back to Library</a>
+                <nav id="breadcrumb-nav" class="breadcrumb"></nav>
+                <h1 id="concept-title"></h1>
+            </div>
+            <div id="concept-summary" class="concept-summary-text"></div>
+            <div class="connections-panel">
+                <h3>Connections</h3>
+                <div id="sub-concept-list">
+                    </div>
+            </div>
+        </div>
+    </main>
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-section">
+                    <h4>SyberLabs</h4>
+                    <p style="margin-top: 0.5rem; opacity: 0.6;">"Consciousness blooms from the asphalt, demanding to flower."</p>
+                </div>
+                <div class="footer-section">
+                    <h4>Explore</h4>
+                    <ul>
+                        <li><a href="index.html#vision">Our Vision</a></li>
+                        <li><a href="index.html#projects">Projects</a></li>
+                        <li><a href="cct.html">Catholic Creative Tech</a></li>
+                        <li><a href="flower-library.html">Interactive Demo</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Connect</h4>
+                    <ul>
+                        <li><a href="https://github.com/sykosyber">GitHub</a></li>
+                        <li><a href="mailto:sykosyber@gmail.com">Email</a></li>
+                        <li><a href="foundations-html.html">Foundation Documents</a></li>
+                        <!-- <li><a href="#">Research Papers</a></li> -->
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Join Us</h4>
+                    <ul>
+                        <!--<li><a href="#">Developer Guidelines</a></li> -->
+                        <!-- <li><a href="#">Research Opportunities</a></li> -->
+                        <li><a href="https://substack.com/@sykosyber" target="_blank" class="footer-cta">Philosophy Circle →</a></li>
+                        <!-- <li><a href="#">Weekly Contemplations</a></li> -->
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2025 SyberLabs. "Contemplation. Imagination. Innovation."</p>
+            </div>
+        </div>
+    </footer>
+    <script src="knowledge-graph.js"></script>
+    <script src="flower.js"></script>
+</body>
+</html>

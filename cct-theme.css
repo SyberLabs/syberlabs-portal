@@ -1,0 +1,168 @@
+/*
+==============================================
+CCT Page & Button Theme
+==============================================
+*/
+
+:root {
+    --cct-navy: #1d2b3f;      /* A deep, contemplative navy */
+    --cct-beige-text: #d4bca3; /* Warm, readable beige */
+    --cct-beige-light: #f0e6d2;/* Lighter cream for highlights */
+    --cct-border: rgba(212, 188, 163, 0.3); /* Subtle beige border */
+}
+
+/* --- CCT Nav Button Highlight --- */
+/* This rule applies when the CCT nav item is hovered or active */
+
+.nav-item-cct:hover,
+.cct-theme .nav-item-cct {
+    background-color: var(--cct-navy);
+    color: var(--cct-beige-light);
+    border-radius: 5px;
+}
+/* This hides the default blue underline for our special button */
+.nav-item-cct:hover::after,
+.cct-theme .nav-item-cct::after {
+    transform: scaleX(0);
+}
+
+
+/* --- CCT Page General Styles --- */
+body.cct-theme {
+    background: var(--cct-navy);
+}
+
+.cct-theme .document-header,
+.cct-theme .section {
+    background: transparent;
+}
+.cct-theme .document-header {
+    padding-top: 0; /* Or a smaller value like 1rem or 20px */
+}
+
+.cct-theme .document-title {
+    margin-top: 0;
+}
+
+.cct-theme .nav-wrapper {
+    background: rgba(29, 43, 63, 0.8); /* Darker translucent nav */
+    backdrop-filter: blur(10px);
+}
+
+/* --- Header & Typography --- */
+.cct-theme .document-subtitle,
+.cct-theme .section-title {
+    color: var(--cct-beige-light);
+}
+
+/* Give the subtitle its own spacing rule to avoid conflicts */
+.cct-theme .section-subtitle {
+    color: var(--cct-beige-light);
+    margin-bottom: 1rem; /* Reduced from 3rem */
+}
+
+/* --- Themed Panels & Cards --- */
+/* Add this new rule for the philosophy quote spacing */
+.cct-theme .philosophy-quote {
+    margin-top: 3rem; /* Add margin to push it down from the header */
+    background: rgba(10, 25, 47, 0.6);
+    border: 1px solid var(--cct-border);
+    color: var(--cct-beige-text);
+    padding: 3rem 4rem;
+}
+
+.cct-theme .section-title {
+    color: var(--cct-beige-light);
+    background: none; /* Removes the conflicting gradient */
+    -webkit-background-clip: initial; /* Resets clipping */
+    background-clip: initial;
+}
+
+.cct-theme .document-title {
+    background: linear-gradient(45deg, var(--cct-beige-light), gold);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+   
+}
+
+/* --- Themed Panels & Cards --- */
+/* --- Themed Panels & Cards (Refined) --- */
+
+/* Base styles for all themed panels */
+.cct-theme .card,
+.cct-theme .philosophy-quote {
+    background: rgba(10, 25, 47, 0.6); /* A slightly translucent darker navy */
+    border: 1px solid var(--cct-border);
+    color: var(--cct-beige-text);
+}
+
+/* Specific typography for cards */
+.cct-theme .card h3,
+.cct-theme .card strong {
+    color: var(--cct-beige-light);
+}
+
+.cct-theme .card p {
+    color: var(--cct-beige-text);
+}
+
+/* Specific styles for the philosophy quote */
+.cct-theme .philosophy-quote {
+    color: var(--cct-beige-light); /* Overrides the base text color */
+    border-left-color: var(--cct-beige-text);
+    padding: 3rem 4rem;
+    margin: 3rem 0;
+}
+
+.cct-theme .philosophy-quote::before {
+    color: var(--cct-beige-text);
+    opacity: 0.2;
+}
+
+/* --- Themed Sacred Heart Visualization --- */
+.cct-theme #sacred-heart-wrapper {
+    background: #0a192f; /* A deep, pure navy for contrast */
+    border-radius: 20px;
+    border: 1px solid var(--cct-border);
+}
+
+/* Ensure text is readable on the dark background */
+.cct-theme .sacred-text.verse,
+.cct-theme .instruction {
+    color: rgba(240, 230, 210, 0.7); /* Use a beige tint for better readability */
+}
+
+#cct-placeholder .card {
+    background:  #3130a5;
+    border: 1px solid var(--cct-border);
+    text-align: center;
+}
+
+#cct-placeholder .card h3 {
+    color: var(--cct-beige-light);
+}
+
+#cct-placeholder .card p {
+    color: var(--cct-beige-light);
+}
+
+#cct-placeholder .card .cta-primary {
+    background: var(--cct-beige-text);
+    color: var(--cct-navy);
+    box-shadow: none;
+}
+
+#cct-placeholder .card .cta-primary:hover {
+    background: var(--cct-beige-light);
+    box-shadow: 0 4px 15px rgba(240, 230, 210, 0.2);
+}
+
+#connect .demo-container {
+    text-align: center;
+}
+
+#cct-placeholder {
+    padding-top: 0;
+    padding-bottom: 1;
+}

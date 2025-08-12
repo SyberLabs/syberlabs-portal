@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Flower Library - SyberLabs</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="stylesheet" href="synthesizer.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Space+Grotesk:wght@300;400;500;600;700&family=Crimson+Text:ital@0;1&display=swap" rel="stylesheet">
+</head>
+
+<body>
+    <div class="loading-screen" id="loadingScreen">
+        <div class="loading-consciousness"></div>
+    </div>
+
+    <nav class="nav-wrapper" id="navWrapper">
+        <div class="container">
+            <div class="nav-container">
+                <div class="nav-logo" onclick="window.location.href='index.html'">SyberLabs</div>
+                <div class="nav">
+                    <div class="nav-item" onclick="window.location.href='index.html#home'">Home</div>
+                    <div class="nav-item" onclick="window.location.href='index.html#vision'">Vision</div>
+                    <div class="nav-item active" onclick="window.location.href='index.html#projects'">Projects</div>
+                    <div class="nav-item" onclick="window.location.href='foundations-html.html'">Foundations</div>
+                    <div class="nav-item" onclick="window.location.href='cct.html'">CCT</div>
+                    <div class="nav-item" onclick="window.location.href='index.html#connect'">Connect</div>
+                </div>
+                <div class="mobile-menu-toggle" onclick="toggleMobileMenu()">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <div class="mobile-menu" id="mobileMenu">
+        <div class="mobile-nav">
+            <div class="nav-item" onclick="window.location.href='index.html#home'; toggleMobileMenu()">Home</div>
+            <div class="nav-item" onclick="window.location.href='index.html#vision'; toggleMobileMenu()">Vision</div>
+            <div class="nav-item" onclick="window.location.href='index.html#projects'; toggleMobileMenu()">Projects</div>
+            <div class="nav-item" onclick="window.location.href='cct.html'; toggleMobileMenu()">CCT</div>
+            <div class="nav-item" onclick="window.location.href='index.html#connect'; toggleMobileMenu()">Connect</div>
+
+        </div>
+    </div>
+
+    <main class="document-page">
+        <header class="document-header">
+            <div class="container">
+                <h1 class="document-title">Enter the Flower Garden</h1>
+                <img src="./images/flower_logo.png" alt="Abstract fractal flower representing consciousness" class="library-hero-image">
+                <p class="document-subtitle">Select a foundational concept to begin your exploration.</p>
+            </div>
+        </header>
+
+        <section class="document-content-section">
+            <div class="container">
+                <div class="library-grid" id="library-grid-container">
+                    </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-section">
+                    <h4>SyberLabs</h4>
+                    <p style="margin-top: 0.5rem; opacity: 0.6;">"Consciousness blooms from the asphalt, demanding to flower."</p>
+                </div>
+                <div class="footer-section">
+                    <h4>Explore</h4>
+                    <ul>
+                        <li><a href="index.html#vision">Our Vision</a></li>
+                        <li><a href="index.html#projects">Projects</a></li>
+                        <li><a href="cct.html">Catholic Creative Tech</a></li>
+                        <li><a href="flower-library.html">Interactive Demo</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Connect</h4>
+                    <ul>
+                        <li><a href="https://github.com/sykosyber">GitHub</a></li>
+                        <li><a href="mailto:sykosyber@gmail.com">Email</a></li>
+                        <li><a href="foundations-html.html">Foundation Documents</a></li>
+                        <!-- <li><a href="#">Research Papers</a></li> -->
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Join Us</h4>
+                    <ul>
+                        <!--<li><a href="#">Developer Guidelines</a></li> -->
+                        <!-- <li><a href="#">Research Opportunities</a></li> -->
+                        <li><a href="https://substack.com/@sykosyber" target="_blank" class="footer-cta">Philosophy Circle →</a></li>
+                        <!-- <li><a href="#">Weekly Contemplations</a></li> -->
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2025 SyberLabs. "Contemplation. Imagination. Innovation."</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="knowledge-graph.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const grid = document.getElementById('library-grid-container');
+            
+            if (typeof knowledgeGraph !== 'undefined' && Array.isArray(knowledgeGraph)) {
+
+                const poemCard = document.createElement('a');
+                poemCard.className = 'library-card';
+                poemCard.href = `flower-poem.html`;
+                poemCard.innerHTML = `
+                    <h3>The Flower Unbounded</h3>
+                    <p>A poetic journey through the six layers of semantic depth, revealing the core practice of the Flower platform.</p>
+                    <span>Read the Poem →</span>
+                `;
+                grid.appendChild(poemCard);
+
+                knowledgeGraph.forEach((concept, index) => {
+                    const card = document.createElement('a');
+                    card.className = 'library-card';
+                    // Link to the flower app, passing the concept index in the URL
+                    card.href = `flower.html?concept=${index}`;
+                    
+                    card.innerHTML = `
+                        <h3>${concept.concept}</h3>
+                        <p>${concept.summary}</p>
+                        <span>Explore →</span>
+                    `;
+                    grid.appendChild(card);
+                });
+            } else {
+                console.error('knowledgeGraph is not defined or not an array. Please check knowledge-graph.js');
+            }
+        });
+    </script>
+    <script src="script.js"></script>
+    <script src="synthesizer.js"></script>
+</body>
+</html>

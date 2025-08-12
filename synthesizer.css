@@ -1,0 +1,171 @@
+/* --- Conceptual Synthesizer v3.1 - SyberLabs Theme --- */
+
+/* --- New Color & Font Palette --- */
+:root {
+    --navy-bg: #0a192f;
+    --navy-panel: #172a45;
+    --beige-text: #e8e4d5;
+    --accent-gold: #cdaA71;
+    --accent-gold-dark: #b89966;
+    /* --- FONT UPDATE --- */
+    --font-display: 'Space Grotesk', sans-serif;
+    --font-body: 'Inter', sans-serif;
+    --font-accent: 'Crimson Text', serif;
+}
+
+.synthesizer-wrapper {
+    padding: 5rem 0;
+}
+
+/* 2. This container becomes the visible, centered panel */
+.synthesizer-container {
+    max-width: 1200px; /* Sets the maximum width of the panel */
+    margin: 0 auto;    /* Centers the panel horizontally */
+    padding: 2.5rem;   /* Adds space inside the panel */
+    border-radius: 20px; /* Rounds the corners */
+
+    /* These styles were moved from the old wrapper */
+    background-color: var(--navy-panel);
+    border: 1px solid rgba(205, 170, 113, 0.2);
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
+}
+
+.synthesizer-header {
+    text-align: center;
+    margin-bottom: 3rem;
+    padding-bottom: 1.5rem;
+    border-bottom: 1px solid rgba(205, 170, 113, 0.2);
+}
+
+.synthesizer-header h2 {
+    /* --- FONT UPDATE --- */
+    font-family: var(--font-display);
+    color: var(--beige-text);
+    font-size: 2.8rem;
+    font-weight: 700;
+    letter-spacing: 1px;
+    margin: 0 0 0.5rem 0;
+}
+
+.synthesizer-header p {
+    /* --- FONT UPDATE --- */
+    font-family: var(--font-accent);
+    font-style: italic;
+    color: var(--accent-gold);
+    font-size: 1.2rem;
+    opacity: 0.8;
+}
+
+.synthesizer-main {
+    display: grid;
+    grid-template-columns: 450px 1fr;
+    gap: 2.5rem;
+    align-items: center;
+}
+
+.synthesizer-nodes {
+    position: relative;
+    width: 100%;
+    height: 400px;
+    flex-shrink: 0;
+}
+
+#connectionsCanvas {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 1;
+    filter: drop-shadow(0 0 5px rgba(205, 170, 113, 0.5));
+}
+
+.synthesizer-nodes .concept-node {
+    position: absolute;
+    top: var(--y);
+    left: var(--x);
+    transform: translate(-50%, -50%);
+    padding: 0.75rem 1.5rem;
+    border: 2px solid rgba(205, 170, 113, 0.5);
+    border-radius: 50px;
+    background-color: var(--navy-bg);
+    cursor: pointer;
+    user-select: none;
+    z-index: 2;
+    font-weight: 500;
+    /* --- FONT UPDATE --- */
+    font-family: var(--font-display);
+    color: var(--beige-text);
+    transition: all 0.25s ease-in-out;
+}
+
+.synthesizer-nodes .concept-node:hover {
+    border-color: var(--accent-gold);
+    background-color: var(--navy-panel);
+    transform: translate(-50%, -50%) scale(1.05);
+}
+
+.synthesizer-nodes .concept-node.connected {
+    color: var(--navy-bg);
+    font-weight: 600;
+    border-color: var(--accent-gold-dark);
+    background-image: linear-gradient(135deg, var(--accent-gold) 0%, var(--accent-gold-dark) 100%);
+    transform: translate(-50%, -50%) scale(1.1);
+    box-shadow: 0 0 25px rgba(205, 170, 113, 0.5);
+}
+
+.synthesizer-info {
+    flex-grow: 1;
+    background: var(--navy-panel);
+    border-radius: 15px;
+    padding: 2rem;
+    border: 1px solid rgba(205, 170, 113, 0.2);
+    transition: opacity 0.3s;
+    min-height: 270px;
+    color: var(--beige-text);
+}
+
+.synthesizer-info:not(.active) {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: var(--font-accent);
+    font-style: italic;
+    opacity: 0.7;
+}
+
+.synthesis-title {
+    /* --- FONT UPDATE --- */
+    font-family: var(--font-display);
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: var(--accent-gold);
+    margin-bottom: 1rem;
+    text-shadow: 0 0 10px rgba(205, 170, 113, 0.3);
+}
+
+.synthesis-title span {
+    color: var(--beige-text);
+    text-shadow: none;
+}
+
+.synthesis-description {
+    /* --- FONT UPDATE --- */
+    font-family: var(--font-accent);
+    font-style: italic;
+    font-size: 1.25rem;
+    line-height: 1.7;
+    color: var(--beige-text);
+    opacity: 0.9;
+}
+
+/* Responsive styles for smaller screens */
+@media (max-width: 900px) {
+    .synthesizer-main {
+        grid-template-columns: 1fr;
+    }
+    .synthesizer-nodes {
+        height: 350px;
+        margin: 0 auto 2rem;
+    }
+}

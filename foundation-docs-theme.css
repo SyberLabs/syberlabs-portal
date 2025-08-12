@@ -1,0 +1,324 @@
+/* =====================================================
+   SyberLabs Foundations Page Styles
+   ===================================================== */
+
+/* CSS Variables - Inheriting from cct-theme */
+.cct-theme {
+    --cct-navy: #1d2b3f;
+    --cct-beige-text: #d4bca3;
+    --cct-beige-light: #f0e6d2;
+    --cct-border: rgba(212, 188, 163, 0.3);
+    
+    --font-display: 'Space Grotesk', sans-serif;
+    --font-body: 'Inter', sans-serif;
+    --font-accent: 'Crimson Text', serif;
+}
+
+/* =====================================================
+   Document Header Styles
+   ===================================================== */
+.document-header {
+    padding: 6rem 0 3rem;
+    background: linear-gradient(180deg, 
+        rgba(29, 43, 63, 0.2) 0%, 
+        rgba(10, 25, 47, 0.4) 100%);
+    border-bottom: 1px solid var(--cct-border);
+    margin-bottom: 3rem;
+}
+
+.document-title {
+    font-family: var(--font-display);
+    font-size: clamp(2rem, 4vw, 3rem);
+    font-weight: 600;
+    color: var(--cct-beige-light);
+    text-align: center;
+    margin-bottom: 1rem;
+    letter-spacing: -0.02em;
+    line-height: 1.2;
+}
+
+.document-subtitle {
+    font-family: var(--font-accent);
+    font-size: 1.25rem;
+    color: var(--cct-beige-text);
+    text-align: center;
+    font-style: italic;
+    opacity: 0.9;
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+/* =====================================================
+   Main Content Container
+   ===================================================== */
+.document-page {
+    min-height: 60vh;
+    padding: 2rem 0 4rem;
+}
+
+.document-content-section {
+    width: 100%;
+}
+
+.document-container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 0 1.5rem;
+}
+
+/* =====================================================
+   Section Headings
+   ===================================================== */
+.cct-theme .document-container h2 {
+    font-family: var(--font-display);
+    font-size: 2rem;
+    font-weight: 500;
+    color: var(--deep-blue);
+    margin: 3rem 0 2rem;
+    padding-bottom: 1rem;
+    border-bottom: 2px solid rgba(212, 188, 163, 0.7); /* Updated Border */
+    letter-spacing: -0.01em;
+    position: relative;
+}
+
+.document-container h2:first-of-type {
+    margin-top: 0;
+}
+
+/* Add a subtle glow effect to section numbers */
+.document-container h2::before {
+    content: '';
+    position: absolute;
+    bottom: -2px;
+    left: 0;
+    width: 60px;
+    height: 2px;
+    background: var(--cct-beige-text);
+    opacity: 0.8;
+}
+
+/* =====================================================
+   Document Cards
+   ===================================================== */
+.doc-card {
+    background: rgba(10, 25, 47, 0.9);
+    border: 1px solid var(--cct-border);
+    border-radius: 8px;
+    padding: 2rem;
+    margin-bottom: 1.5rem;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    position: relative;
+    overflow: hidden;
+}
+
+/* Subtle gradient overlay on hover */
+.doc-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, 
+        transparent 0%, 
+        rgba(212, 188, 163, 0.05) 50%, 
+        transparent 100%);
+    transition: left 0.5s ease;
+}
+
+.doc-card:hover::before {
+    left: 100%;
+}
+
+.doc-card:hover {
+    border-color: var(--cct-beige-text);
+    background: rgba(10, 25, 47, 1);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 20px rgba(212, 188, 163, 0.1);
+}
+
+.doc-card h3 {
+    font-family: var(--font-display);
+    font-size: 1.35rem;
+    font-weight: 500;
+    color: var(--cct-beige-light);
+    margin: 0 0 1rem 0;
+    letter-spacing: -0.01em;
+    line-height: 1.3;
+}
+
+.doc-card p {
+    font-family: var(--font-accent);
+    font-size: 1.1rem;
+    color: var(--cct-beige-text);
+    line-height: 1.6;
+    margin: 0 0 1.5rem 0;
+    opacity: 0.95;
+}
+
+/* =====================================================
+   Document Links
+   ===================================================== */
+.doc-link {
+    display: inline-flex;
+    align-items: center;
+    font-family: var(--font-body);
+    font-size: 0.95rem;
+    font-weight: 500;
+    color: var(--cct-beige-light);
+    text-decoration: none;
+    padding: 0.5rem 1rem;
+    border: 1px solid var(--cct-border);
+    border-radius: 4px;
+    background: rgba(212, 188, 163, 0.05);
+    transition: all 0.2s ease;
+    position: relative;
+    overflow: hidden;
+}
+
+.doc-link::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: rgba(212, 188, 163, 0.1);
+    transition: left 0.3s ease;
+}
+
+.doc-link:hover::before {
+    left: 0;
+}
+
+.doc-link:hover {
+    color: var(--cct-beige-light);
+    border-color: var(--cct-beige-light);
+    transform: translateX(4px);
+    box-shadow: 0 2px 8px rgba(212, 188, 163, 0.15);
+}
+
+/* =====================================================
+   Responsive Design
+   ===================================================== */
+@media (max-width: 768px) {
+    .document-header {
+        padding: 4rem 0 2rem;
+    }
+    
+    .document-title {
+        font-size: 2rem;
+    }
+    
+    .document-subtitle {
+        font-size: 1.1rem;
+    }
+    
+    .document-container {
+        padding: 0 1rem;
+    }
+    
+    .document-container h2 {
+        font-size: 1.5rem;
+        margin: 2rem 0 1.5rem;
+    }
+    
+    .doc-card {
+        padding: 1.5rem;
+        margin-bottom: 1rem;
+    }
+    
+    .doc-card h3 {
+        font-size: 1.2rem;
+    }
+    
+    .doc-card p {
+        font-size: 1rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .document-title {
+        font-size: 1.75rem;
+    }
+    
+    .document-subtitle {
+        font-size: 1rem;
+    }
+    
+    .doc-card {
+        padding: 1.25rem;
+    }
+    
+    .doc-card h3 {
+        font-size: 1.1rem;
+    }
+    
+    .doc-card p {
+        font-size: 0.95rem;
+    }
+    
+    .doc-link {
+        font-size: 0.9rem;
+        padding: 0.4rem 0.8rem;
+    }
+}
+
+/* =====================================================
+   Animation for Page Load
+   ===================================================== */
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.document-header {
+    animation: fadeInUp 0.6s ease-out;
+}
+
+.doc-card {
+    animation: fadeInUp 0.8s ease-out;
+    animation-fill-mode: both;
+}
+
+.doc-card:nth-child(2) { animation-delay: 0.1s; }
+.doc-card:nth-child(3) { animation-delay: 0.2s; }
+.doc-card:nth-child(4) { animation-delay: 0.3s; }
+
+/* =====================================================
+   Accessibility & Focus States
+   ===================================================== */
+.doc-link:focus {
+    outline: 2px solid var(--cct-beige-text);
+    outline-offset: 2px;
+}
+
+.doc-card:focus-within {
+    border-color: var(--cct-beige-light);
+    box-shadow: 0 0 0 2px rgba(212, 188, 163, 0.2);
+}
+
+/* Ensure good contrast for screen readers */
+@media (prefers-contrast: high) {
+    .doc-card {
+        border-width: 2px;
+    }
+    
+    .doc-link {
+        border-width: 2px;
+        font-weight: 600;
+    }
+}
+
+body.foundations-page .doc-card {
+    animation: none !important;
+    opacity: 1 !important;
+    transform: none !important;
+    transition: none !important;
+}

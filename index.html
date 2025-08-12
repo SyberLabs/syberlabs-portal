@@ -1,0 +1,426 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+    <link rel="manifest" href="/site.webmanifest">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SyberLabs - Technologies for Consciousness Expansion</title>
+    
+    <meta name="description" content="SyberLabs is developing technologies for consciousness expansion, grounding innovation in transcendent truth and authentic human flourishing.">
+    <meta property="og:title" content="SyberLabs - Consciousness First">
+    <meta property="og:description" content="Exploring technology that serves authentic human flourishing by placing consciousness first.">
+    <meta property="og:image" content="https://syberlabs.github.io/syberlabs-portal/syberlabs-preview-image.jpg">
+    <meta property="og:url" content="https://syberlabs.github.io/syberlabs-portal/">
+    <meta property="og:type" content="website">
+    <meta name="twitter:card" content="summary_large_image">
+
+    <link rel="stylesheet" href="styles.css">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Space+Grotesk:wght@300;400;500;600;700&family=Crimson+Text:ital@0;1&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="loading-screen" id="loadingScreen">
+        <div class="loading-consciousness"></div>
+    </div>
+
+    <nav class="nav-wrapper" id="navWrapper">
+        <div class="container">
+            <div class="nav-container">
+                <div class="nav-logo" onclick="scrollToTop()">SyberLabs</div>
+                <div class="nav">
+                    <div class="nav-item active" onclick="scrollToSection('home')">Home</div>
+                    <div class="nav-item" onclick="scrollToSection('vision')">Vision</div>
+                    <div class="nav-item" onclick="scrollToSection('projects')">Projects</div>
+                    <div class="nav-item" onclick="scrollToSection('connect')">Connect</div>
+                    <div class="nav-item nav-item-cct" onclick="window.location.href='foundations-html.html'">Foundations</div>
+                    <div class="nav-item nav-item-cct" onclick="window.location.href='cct.html'">CCT</div>
+                    
+                    <div class="mode-toggle" onclick="toggleMode()">
+
+                    </div>
+                </div>
+                <div class="mobile-menu-toggle" onclick="toggleMobileMenu()">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <div class="mobile-menu" id="mobileMenu">
+        <div class="mobile-nav">
+            <div class="nav-item" onclick="scrollToSection('home'); toggleMobileMenu()">Home</div>
+            <div class="nav-item" onclick="scrollToSection('vision'); toggleMobileMenu()">Vision</div>
+            <div class="nav-item" onclick="scrollToSection('projects'); toggleMobileMenu()">Projects</div>
+            <div class="nav-item nav-item-cct" onclick="window.location.href='cct.html'; toggleMobileMenu()">CCT</div>
+            <div class="nav-item" onclick="scrollToSection('connect'); toggleMobileMenu()">Connect</div>
+            <div class="mode-toggle" onclick="toggleMode(); toggleMobileMenu()">
+                
+            </div>
+        </div>
+    </div>
+
+    <header class="header" id="home">
+        <div class="container">
+            <div class="logo-wrapper">
+                <div class="consciousness-field">
+                    <div class="field-layer"></div>
+                    <div class="field-layer"></div>
+                    <div class="field-layer"></div>
+                    <div class="field-layer"></div>
+                    <h1 class="logo-main">SyberLabs</h1>
+                </div>
+                <p class="tagline">Consciousness First</p>
+            </div>
+
+            <div class="hero-cta">
+                <a href="#vision" class="cta-primary">
+                    <span>Explore Our Vision</span>
+                    <span>→</span>
+                </a>
+                <a href="flower-library.html" class="cta-secondary">
+                    <span>Launch Flower</span>
+                    <span>🌸</span>
+                </a>
+            </div>
+
+
+        </div>
+    </header>
+
+    <main>
+        <section id="vision" class="section">
+            <div class="container">
+                <div class="section-header">
+                    <h2 class="section-title">Our Vision</h2>
+                    <p class="section-subtitle">Technology born from contemplation, crafted for wonder.</p>
+                </div>
+
+                <div class="mandala-wrapper">
+                            <canvas id="mandala"></canvas>
+                </div>
+                <div class="chambers-container">
+                    <div class="chamber-wrapper">
+                        <div class="chamber-card">
+                            <div class="chamber-visual">
+                                <div class="expansion-visual">
+                                    <div class="expansion-core"></div>
+                                    <div class="expansion-ring"></div>
+                                    <div class="expansion-ring"></div>
+                                </div>
+                            </div>
+                            <div class="chamber-content">
+                                <h3 class="chamber-title">EXPANSION</h3>
+                                <p class="chamber-description">
+                                    Moving beyond consciousness anesthesia to technologies that repeatedly inspire wonder. 
+                                    We design systems that expand cognitive capacity rather than exploit attention.
+                                </p>
+                                <ul class="chamber-features">
+                                    <li>Wonder-driven interfaces</li>
+                                    <li>Curiosity amplification</li>
+                                    <li>Conceptual exploration</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="chamber-wrapper">
+                        <div class="chamber-card">
+                            <div class="chamber-visual">
+                                <div class="expansion-visual">
+                                    <div class="expansion-core" style="background: radial-gradient(circle, #8e44ad, #3498db)"></div>
+                                    <div class="expansion-ring" style="border-color: #8e44ad"></div>
+                                    <div class="expansion-ring" style="border-color: #3498db"></div>
+                                </div>
+                            </div>
+                            <div class="chamber-content">
+                                <h3 class="chamber-title">PHILOSOPHY</h3>
+                                <p class="chamber-description">
+                                    Grounding technology in transcendent truth. We maintain clear distinctions between 
+                                    intelligence, consciousness, and soul while engaging all three domains seriously.
+                                </p>
+                                <ul class="chamber-features">
+                                    <li>Metaphysical logic</li>
+                                    <li>Sacred recursion</li>
+                                    <li>Conscious evolution</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="chamber-wrapper">
+                        <div class="chamber-card">
+                            <div class="chamber-visual">
+                                <div class="expansion-visual">
+                                    <div class="expansion-core" style="background: radial-gradient(circle, #2ecc71, #3498db)"></div>
+                                    <div class="expansion-ring" style="border-color: #2ecc71"></div>
+                                    <div class="expansion-ring" style="border-color: #3498db; animation-direction: reverse"></div>
+                                </div>
+                            </div>
+                            <div class="chamber-content">
+                                <h3 class="chamber-title">INNOVATION</h3>
+                                <p class="chamber-description">
+                                    Engineering that emerges from contemplative engagement with reality's structure. 
+                                    Focus on innovation through spiritual practice, imaginative experimentation, and cross-boundary research.
+                                </p>
+                                <ul class="chamber-features">
+                                    <li>Distributed systems</li>
+                                    <li>Contemplative design</li>
+                                    <li>Integrative solutions</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="chamber-wrapper">
+                        <div class="chamber-card">
+                            <div class="chamber-visual">
+                                <div class="expansion-visual">
+                                    <div class="expansion-core" style="background: radial-gradient(circle, #00d4ff, #9370db)"></div>
+                                    <div class="expansion-ring" style="border-color: #00d4ff"></div>
+                                    <div class="expansion-ring" style="border-color: #9370db"></div>
+                                </div>
+                            </div>
+                            <div class="chamber-content">
+                                <h3 class="chamber-title">INTERFACE</h3>
+                                <p class="chamber-description">
+                                    Creating bridges between cyberspace and consciousness. Our interfaces facilitate 
+                                    genuine human-machine collaboration that enhances rather than replaces human cognition.
+                                </p>
+                                <ul class="chamber-features">
+                                    <li>Purposeful engagement</li>
+                                    <li>Intuitive control </li>
+                                    <li>Aesthetic experience</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="philosophy-quote">
+                    "When faced with a choice between technology that captures consciousness and technology that expands it, we choose to place consciousness first."
+                </div>
+            </div>
+        </section>
+
+
+
+        <section id="projects" class="section">
+            <div class="container">
+                <div class="section-header">
+                    <h2 class="section-title">Active Projects</h2>
+                    <p class="section-subtitle">Concrete implementations of consciousness expansion</p>
+                </div>
+
+                <div class="grid grid-2">
+                    <div class="project-card">
+                        <div class="project-header">
+                            <div class="project-icon">🌸</div>
+                            <h3>Flower Platform</h3>
+                            <p>Fractal Learning Interface</p>
+                        </div>
+                        <div class="project-content">
+                            <p>A learning platform that treats concepts as explorable territories within multidimensional meaning space. Features fractal exploration and synthesis mechanics.</p>
+                            <ul>
+                                <li>• Five-window curiosity architecture</li>
+                                <li>• Card synthesis for novel connections</li>
+                                <li>• Wonder-optimized AI guidance</li>
+                            </ul>
+                            <span class="project-status development">In Development</span>
+                            <a href="flower-library.html" class="project-link">Launch Application →</a>
+                        </div>
+                    </div>
+
+                    <div class="project-card">
+                        <div class="project-header">
+                            <div class="project-icon">👼</div>
+                            <h3>Information Angel</h3>
+                            <p>Contemplative Interface </p>
+                        </div>
+                        <div class="project-content">
+                            <p>Interface designed for contemplative engagement with information systems through guided reflection of the Christian Scripture.</p>
+                            <a href="https://syberlabs.github.io/InformationAngel/" style="color: var(--cyber-blue); text-decoration: none;">Launch Application →</a>
+                            <br>
+                            <span class="project-status">Active</span>
+                        </div>
+                    </div>
+
+                    <div class="project-card">
+                        <div class="project-header">
+                            <div class="project-icon">⚖️</div>
+                            <h3>Moral AI</h3>
+                            <p>Ethics-Grounded System</p>
+                        </div>
+                        <div class="project-content">
+                            <p>A desktop utility designed to transform general-purpose AI assistants into specialized philosophical thinking partners.</p>
+                            <a href="https://github.com/syberlabs/MoralAI" style="color: var(--cyber-blue); text-decoration: none;">View on GitHub →</a>
+                            <br>
+                            <span class="project-status">Active</span>
+                        </div>
+                    </div>
+
+                    <div class="project-card">
+                        <div class="project-header">
+                            <div class="project-icon">🪐</div>
+                            <h3>Cosmonaut's Log</h3>
+                            <p>Contemplative Text Environment</p>
+                        </div>
+                        <div class="project-content">
+                            <p>"For the vastness of space, by the light of amber stars." A minimalist, contemplative writing tool designed as an antidote to digital noise.</p>
+                            <a href="https://cosmonauts-log.netlify.app/" style="color: var(--cyber-blue); text-decoration: none;">Launch Application →</a>
+                            <br>
+                            <span class="project-status">Active</span>
+                        </div>
+                    </div>
+                    <div class="project-card">
+                        <div class="project-header">
+                            <div class="project-icon">🌱</div>
+                            <h3>Project Rhizome</h3>
+                            <p>Cognitive Flexibility Tool</p>
+                        </div>
+                        <div class="project-content">
+                            <p>A guided journey to deconstruct fixed ideas and explore new mental pathways, inspired by Deleuzian philosophy.</p>
+                            <ul>
+                                <li>• Multi-step reflective process</li>
+                                <li>• Synthesis of new perspectives</li>
+                                <li>• Exportable cognitive journeys</li>
+                            </ul>
+                            <span class="project-status development">In Development</span>
+                            <a href="https://syberlabs.github.io/Project-Rhizome/" class="project-link">Launch Application →</a>
+                        </div>
+                    </div>
+
+                    <div class="project-card">
+                        <div class="project-header">
+                            <div class="project-icon">🏛️</div>
+                            <h3>The Guild</h3>
+                            <p>Collaborative Creation Forge</p>
+                        </div>
+                        <div class="project-content">
+                            <p>A platform for small, dedicated groups to complete a single, meaningful project. A workshop, not a showcase, built for communion over performance.</p>
+                            <ul>
+                                <li>• Vocation-based projects</li>
+                                <li>• Sealed, focused workshop environments</li>
+                                <li>• Finitude by design (dissolving guilds)</li>
+                            </ul>
+                            <span class="project-status conceptual">Conceptual</span>
+                            <a href="alchemical-manuscript.html" class="project-link">Read the Manifesto →</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <section id="cct-placeholder" class="section">
+                    <div class="container">
+                        <div class="card" style="text-align: center;">
+                            <h3>Faith & Innovation</h3>
+                            <p>SyberLabs is actively researching the synthesis of transcendent principles and advanced technology. Explore our work in Catholic Creative Technologies.</p>
+                            <div class="hero-cta" style="margin-top: 1.5rem; justify-content: center;">
+                                <a href="cct.html" class="cta-primary">
+                                    <span>Explore CCT</span>
+                                    <span>→</span>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+        </section>
+
+        <section id="connect" class="section">
+            <div class="container">
+                <div class="section-header">
+                    <h2 class="section-title">Join the Mission</h2>
+                    <p class="section-subtitle">Conscious collaboration for consciousness expansion</p>
+                </div>
+
+                <div class="grid grid-3">
+                    <div class="card">
+                        <h3>🛠️ Developers</h3>
+                        <p>Build systems that expand rather than exploit consciousness. We need engineers who prioritize human flourishing over engagement metrics.</p>
+                    </div>
+                    <div class="card">
+                        <h3>🤔 Philosophers</h3>
+                        <p>Bridge ancient wisdom and contemporary innovation. Help articulate metaphysical foundations for transcendent technology.</p>
+                    </div>
+                    <div class="card">
+                        <h3>🔬 Researchers</h3>
+                        <p>Investigate consciousness expansion metrics, contemplative interfaces, and saint-pattern AI implementation.</p>
+                    </div>
+                </div>
+
+                <div class="demo-container" style="margin-top: 5rem;">
+                    <h3 class="demo-title" style="color: var(--deep-blue);">Ready to Expand?</h3>
+                    <p style="font-family: var(--font-accent); font-size: 1.8rem; font-style: italic; margin-bottom: 2.5rem; color: var(--deep-blue);">
+                        The path lies in front, the flower blooms ahead.
+                    </p>
+                    <div class="hero-cta" style="margin-top: 1rem;">
+                        <a href="mailto:sykosyber@gmail.com" class="cta-primary">
+                            <span>Begin the Work</span>
+                            <span>→</span>
+                        </a>
+                        <a href="https://github.com/syberlabs" class="cta-secondary">
+                            <span>View Our Code</span>
+                            <span>💻</span>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-section">
+                    <h4>SyberLabs</h4>
+                    <p style="margin-top: 0.5rem; opacity: 0.6;">"Consciousness blooms from the asphalt, demanding to flower."</p>
+                </div>
+                <div class="footer-section">
+                    <h4>Explore</h4>
+                    <ul>
+                        <li><a href="#" onclick="scrollToSection('vision'); return false;">Our Vision</a></li>
+                        <li><a href="#" onclick="scrollToSection('projects'); return false;">Projects</a></li>
+                        <li><a href="cct.html">Catholic Creative Tech</a></li>
+                        <li><a href="flower-library.html">Interactive Demo</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Connect</h4>
+                    <ul>
+                        <li><a href="https://github.com/syberlabs">GitHub</a></li>
+                        <li><a href="mailto:sykosyber@gmail.com">Email</a></li>
+                        <li><a href="foundations-html.html">Foundation Documents</a></li>
+                        <!-- <li><a href="#">Research Papers</a></li> -->
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Join Us</h4>
+                    <ul>
+                        <!--<li><a href="#">Developer Guidelines</a></li> -->
+                        <!-- <li><a href="#">Research Opportunities</a></li> -->
+                        <li><a href="https://substack.com/@sykosyber" target="_blank" class="footer-cta">Philosophy Circle →</a></li>
+                        <!-- <li><a href="#">Weekly Contemplations</a></li> -->
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2025 SyberLabs. "Contemplation. Imagination. Innovation."</p>
+            </div>
+        </div>
+    </footer>
+
+    <div class="consciousness-meter" id="consciousnessMeter">
+        <div class="meter-label">Consciousness Expansion Level</div>
+        <div class="meter-bar">
+            <div class="meter-fill" id="meterFill"></div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
