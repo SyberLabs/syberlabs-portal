@@ -77,14 +77,6 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
 
-    // Mobile menu
-    window.toggleMobileMenu = function() {
-        const menu = document.getElementById('mobileMenu');
-        if (menu) {
-            menu.classList.toggle('active');
-        }
-    }
-
     // --- Mobile Menu Logic ---
     const menuToggle = document.querySelector('.mobile-menu-toggle');
     const mobileMenu = document.getElementById('mobileMenu');
