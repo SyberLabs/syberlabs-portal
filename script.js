@@ -85,7 +85,40 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     }
 
+    // --- Mobile Menu Logic ---
+    const menuToggle = document.querySelector('.mobile-menu-toggle');
+    const mobileMenu = document.getElementById('mobileMenu');
 
+    // This one function handles both opening and closing
+    function toggleMobileMenu() {
+        menuToggle.classList.toggle('active'); // Toggles the X animation
+        mobileMenu.classList.toggle('active'); // Toggles the menu visibility
+
+        // Prevent background scrolling when menu is open
+        const isMenuOpen = mobileMenu.classList.contains('active');
+        document.body.style.overflow = isMenuOpen ? 'hidden' : '';
+    }
+
+    // Add the click listener to the toggle button
+    if (menuToggle) {
+        menuToggle.addEventListener('click', toggleMobileMenu);
+    }
+
+    // Logic to close the menu when a link is clicked
+    const mobileNavItems = document.querySelectorAll('.mobile-menu .nav-item');
+    mobileNavItems.forEach(item => {
+        item.addEventListener('click', () => {
+            const link = item.getAttribute('data-link');
+            if (link) {
+                window.location.href = link;
+            }
+            
+            // If the menu is open, close it
+            if (mobileMenu.classList.contains('active')) {
+                toggleMobileMenu();
+            }
+        });
+    });
     // Make functions globally available
     window.scrollToSection = scrollToSection;
     window.scrollToTop = scrollToTop;
