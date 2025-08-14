@@ -1,8 +1,6 @@
-// /netlify/functions/oracle.js - CORRECTED VERSION
+// /netlify/functions/oracle.js - FINAL (Non-Streaming Version)
 
 const fetch = require('node-fetch');
-// The 'stream' module is no longer needed
-// const { Readable } = require('stream');
 
 exports.handler = async function(event) {
   if (event.httpMethod !== 'POST') {
@@ -14,8 +12,7 @@ exports.handler = async function(event) {
     const { AI_API_KEY, ORACLE_SYSTEM_PROMPT } = process.env;
 
     if (!AI_API_KEY || !ORACLE_SYSTEM_PROMPT) {
-      console.error('Server misconfiguration: Missing environment variables.');
-      throw new Error('Server misconfiguration.');
+      throw new Error('Server misconfiguration: Missing environment variables.');
     }
 
     const apiEndpoint = 'https://api.deepseek.com/chat/completions';
@@ -32,7 +29,7 @@ exports.handler = async function(event) {
           { role: 'system', content: ORACLE_SYSTEM_PROMPT },
           { role: 'user', content: message },
         ],
-        stream: true,
+        stream: false, // KEY CHANGE: We are no longer requesting a stream
         temperature: 0.5,
         max_tokens: 200,
       }),
@@ -43,25 +40,23 @@ exports.handler = async function(event) {
       console.error(`AI API Error: ${aiResponse.status} ${aiResponse.statusText}`, errorBody);
       throw new Error('Failed to get a valid response from the AI service.');
     }
-    
-    // 💡 FIX: Return a standards-compliant Response object.
-    // This allows Netlify to correctly handle the stream from the DeepSeek API 
-    // and pipe it to your frontend client.
-    return new Response(aiResponse.body, {
-      status: 200,
-      headers: {
-        'Content-Type': 'text/event-stream',
-        'Cache-Control': 'no-cache',
-        'Connection': 'keep-alive',
-      },
-    });
+
+    // Get the JSON data directly
+    const data = await aiResponse.json();
+    const messageContent = data.choices[0].message.content;
+
+    // Return a simple JSON response
+    return {
+      statusCode: 200,
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ response: messageContent }),
+    };
 
   } catch (error) {
     console.error('Oracle function execution error:', error.message);
-    // Return a standard response object for errors
-    return new Response(JSON.stringify({ error: 'The Oracle encountered an internal error.' }), {
-      status: 500,
-      headers: { 'Content-Type': 'application/json' },
-    });
+    return {
+      statusCode: 500,
+      body: JSON.stringify({ error: 'The Oracle encountered an internal error.' }),
+    };
   }
 };
