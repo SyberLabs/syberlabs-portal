@@ -1,9 +1,7 @@
 // /netlify/functions/oracle.js - FINAL PRODUCTION VERSION
 
 const fetch = require('node-fetch');
-
-// This is a more robust way to handle streaming in some serverless environments
-const { Readable } = require('stream');
+const { Readable } = require('stream'); // Import the Readable stream utility
 
 exports.handler = async function(event) {
   if (event.httpMethod !== 'POST') {
@@ -45,7 +43,7 @@ exports.handler = async function(event) {
       throw new Error('Failed to get a valid response from the AI service.');
     }
 
-    // Convert the node-fetch stream to a format Netlify can handle
+    // Convert the node-fetch stream to a standard Node.js Readable stream
     const readableNodeStream = Readable.from(aiResponse.body);
 
     return {

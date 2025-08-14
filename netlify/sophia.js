@@ -1,67 +1,95 @@
-// /netlify/functions/oracle.js - FINAL PRODUCTION VERSION
+// /netlify/sophia.js - Production Version
 
-const fetch = require('node-fetch');
-const { Readable } = require('stream'); // Import the Readable stream utility
+document.addEventListener('DOMContentLoaded', () => {
+    // ... (Configuration and DOM Selection are the same) ...
+    const API_ENDPOINT = '/.netlify/functions/oracle';
+    const summonButton = document.getElementById('summon-button');
+    const promptContainer = document.getElementById('prompt-container');
+    const inputForm = document.getElementById('oracle-input-form');
+    const userInput = document.getElementById('oracle-user-input');
+    const responseContainer = document.getElementById('response-container');
+    const responseText = document.getElementById('response-text');
+    const dismissButton = document.getElementById('dismiss-button');
+    const historyButton = document.getElementById('history-log-button');
+    const historyPanel = document.getElementById('history-log-panel');
+    const historyCloseButton = document.getElementById('history-log-close');
+    const historyContent = document.getElementById('history-log-content');
+    let isSophiaActive = false;
 
-exports.handler = async function(event) {
-  if (event.httpMethod !== 'POST') {
-    return { statusCode: 405, body: 'Method Not Allowed' };
-  }
+    // ... (Event Handlers are the same) ...
+    if (summonButton) { summonButton.addEventListener('click', () => { if (!isSophiaActive) { hideSummonButton(); showPrompt(); } }); }
+    if (inputForm) { inputForm.addEventListener('submit', handleFormSubmit); }
+    if (dismissButton) { dismissButton.addEventListener('click', hideResponse); }
+    if (historyButton) { historyButton.addEventListener('click', () => historyPanel.classList.toggle('hidden')); }
+    if (historyCloseButton) { historyCloseButton.addEventListener('click', () => historyPanel.classList.add('hidden')); }
+    
+    // --- CORE LOGIC (RESTORED) ---
+    async function handleFormSubmit(e) {
+        e.preventDefault();
+        if (isSophiaActive) return;
+        const userMessage = userInput.value.trim();
+        if (!userMessage) return;
 
-  try {
-    const { message } = JSON.parse(event.body);
-    const { AI_API_KEY, ORACLE_SYSTEM_PROMPT } = process.env;
+        isSophiaActive = true;
+        hidePrompt();
+        userInput.value = '';
+        showResponse('Sophia is contemplating...');
 
-    if (!AI_API_KEY || !ORACLE_SYSTEM_PROMPT) {
-      console.error('Server misconfiguration: Missing environment variables.');
-      throw new Error('Server misconfiguration.');
+        try {
+            const response = await fetch(API_ENDPOINT, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ message: userMessage }),
+            });
+            if (!response.ok) throw new Error('Connection to Sophia has been lost.');
+            
+            // Restore the call to the streaming processor
+            const finalResponse = await processStream(response);
+            
+            appendToHistory('user', userMessage);
+            appendToHistory('sophia', finalResponse);
+        } catch (error) {
+            console.error('SyberSophia Error:', error);
+            showResponse(error.message);
+        }
     }
 
-    const apiEndpoint = 'https://api.deepseek.com/chat/completions';
+    // THIS FUNCTION IS NOW RESTORED
+    async function processStream(response) {
+        const reader = response.body.getReader();
+        const decoder = new TextDecoder();
+        let completeResponse = '';
+        responseText.textContent = ''; // Clear the "contemplating..." message
 
-    const aiResponse = await fetch(apiEndpoint, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        'Authorization': `Bearer ${AI_API_KEY}`,
-      },
-      body: JSON.stringify({
-        model: 'deepseek-chat',
-        messages: [
-          { role: 'system', content: ORACLE_SYSTEM_PROMPT },
-          { role: 'user', content: message },
-        ],
-        stream: true,
-        temperature: 0.5,
-        max_tokens: 200,
-      }),
-    });
-
-    if (!aiResponse.ok) {
-      const errorBody = await aiResponse.text();
-      console.error(`AI API Error: ${aiResponse.status} ${aiResponse.statusText}`, errorBody);
-      throw new Error('Failed to get a valid response from the AI service.');
+        while (true) {
+            const { value, done } = await reader.read();
+            if (done) break;
+            const chunk = decoder.decode(value, { stream: true });
+            const lines = chunk.split('\n');
+            for (const line of lines) {
+                if (line.startsWith('data: ')) {
+                    const data = line.substring(6);
+                    if (data.trim() === '[DONE]') break;
+                    try {
+                        const parsed = JSON.parse(data);
+                        const content = parsed.choices[0]?.delta?.content || '';
+                        if (content) {
+                            completeResponse += content;
+                            responseText.textContent = completeResponse;
+                        }
+                    } catch (e) { /* Ignore */ }
+                }
+            }
+        }
+        return completeResponse;
     }
-
-    // Convert the node-fetch stream to a standard Node.js Readable stream
-    const readableNodeStream = Readable.from(aiResponse.body);
-
-    return {
-      statusCode: 200,
-      headers: {
-        'Content-Type': 'text/event-stream',
-        'Cache-Control': 'no-cache',
-        'Connection': 'keep-alive',
-      },
-      body: readableNodeStream,
-      isBase64Encoded: false,
-    };
-
-  } catch (error) {
-    console.error('Oracle function execution error:', error.message);
-    return {
-      statusCode: 500,
-      body: JSON.stringify({ error: 'The Oracle encountered an internal error.' }),
-    };
-  }
-};
+    
+    // ... (Helper & UI Functions are the same) ...
+    function showSummonButton() { if (summonButton) summonButton.classList.remove('hidden'); }
+    function hideSummonButton() { if (summonButton) summonButton.classList.add('hidden'); }
+    function showPrompt() { if (promptContainer) { promptContainer.classList.add('visible'); userInput.focus(); } }
+    function hidePrompt() { if (promptContainer) promptContainer.classList.remove('visible'); }
+    function showResponse(text) { if (responseText) { responseText.textContent = text; responseContainer.classList.add('visible'); } }
+    function hideResponse() { if (responseContainer) responseContainer.classList.remove('visible'); showSummonButton(); isSophiaActive = false; }
+    function appendToHistory(speaker, text) { if (!historyContent) return; const entryDiv = document.createElement('div'); entryDiv.classList.add('log-entry', speaker); const speakerStrong = document.createElement('strong'); speakerStrong.textContent = speaker === 'user' ? 'You:' : 'Sophia:'; const textNode = document.createTextNode(text); entryDiv.appendChild(speakerStrong); entryDiv.appendChild(textNode); historyContent.appendChild(entryDiv); historyContent.scrollTop = historyContent.scrollHeight; }
+});
