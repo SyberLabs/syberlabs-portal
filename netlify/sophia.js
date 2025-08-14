@@ -59,19 +59,63 @@ document.addEventListener('DOMContentLoaded', () => {
         showResponse('Sophia is contemplating...');
 
         try {
-            const response = await fetch(API_ENDPOINT, {
+            const { message } = JSON.parse(event.body);
+            const { AI_API_KEY, ORACLE_SYSTEM_PROMPT } = process.env;
+
+            if (!AI_API_KEY || !ORACLE_SYSTEM_PROMPT) {
+                console.error('Server misconfiguration: Missing environment variables.');
+                throw new Error('Server misconfiguration.');
+            }
+
+            const apiEndpoint = 'https://api.deepseek.com/chat/completions';
+
+            const aiResponse = await fetch(apiEndpoint, {
                 method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ message: userMessage }),
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${AI_API_KEY}`,
+                },
+                body: JSON.stringify({
+                    model: 'deepseek-chat',
+                    messages: [
+                        { role: 'system', content: ORACLE_SYSTEM_PROMPT },
+                        { role: 'user', content: message },
+                    ],
+                    stream: true, // We are still requesting a stream
+                    temperature: 0.5,
+                    max_tokens: 200,
+                }),
             });
-            if (!response.ok) throw new Error('Connection to Sophia has been lost.');
-            const finalResponse = await processStream(response);
-            appendToHistory('user', userMessage);
-            appendToHistory('sophia', finalResponse);
+
+            // --- TEMPORARY DIAGNOSTIC CODE ---
+            // We will capture the entire response body as text first.
+            const rawBodyText = await aiResponse.text();
+
+            // We will print this raw text to the function log.
+            console.log("--- RAW AI RESPONSE BODY ---");
+            console.log(rawBodyText);
+            console.log("--- END RAW AI RESPONSE BODY ---");
+
+            if (!aiResponse.ok) {
+                console.error(`AI API Error Status: ${aiResponse.status} ${aiResponse.statusText}`);
+                throw new Error('AI service returned an error status.');
+            }
+            
+            // For this test, we return the captured text instead of the original stream.
+            return {
+                statusCode: 200,
+                headers: { 'Content-Type': 'text/plain' },
+                body: `This is a test. The raw response was logged to the function console.`,
+            };
+            // --- END DIAGNOSTIC CODE ---
+
         } catch (error) {
-            console.error('SyberSophia Error:', error);
-            showResponse(error.message);
-        }
+            console.error('Oracle function execution error:', error.message);
+            return {
+                statusCode: 500,
+                body: JSON.stringify({ error: 'The Oracle encountered an internal error.' }),
+            };
+        }    
     }
 
     async function processStream(response) {
