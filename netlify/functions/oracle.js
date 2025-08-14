@@ -1,6 +1,9 @@
-// /netlify/functions/oracle.js - Production Version
+// /netlify/functions/oracle.js - FINAL PRODUCTION VERSION
 
 const fetch = require('node-fetch');
+
+// This is a more robust way to handle streaming in some serverless environments
+const { Readable } = require('stream');
 
 exports.handler = async function(event) {
   if (event.httpMethod !== 'POST') {
@@ -42,7 +45,9 @@ exports.handler = async function(event) {
       throw new Error('Failed to get a valid response from the AI service.');
     }
 
-    // Restore the live streaming response
+    // Convert the node-fetch stream to a format Netlify can handle
+    const readableNodeStream = Readable.from(aiResponse.body);
+
     return {
       statusCode: 200,
       headers: {
@@ -50,7 +55,7 @@ exports.handler = async function(event) {
         'Cache-Control': 'no-cache',
         'Connection': 'keep-alive',
       },
-      body: aiResponse.body,
+      body: readableNodeStream,
       isBase64Encoded: false,
     };
 
