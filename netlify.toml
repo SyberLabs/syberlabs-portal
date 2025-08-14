@@ -4,4 +4,8 @@
 [functions]
   directory = "netlify/functions/"
   node_bundler = "esbuild"
+
+# This correctly sets a 25-second timeout for ALL functions.
+# The [functions."*"] syntax is the key fix.
+[functions."*"]
   timeout = 25
