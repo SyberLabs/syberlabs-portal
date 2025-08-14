@@ -1,10 +1,8 @@
-// /netlify/sophia.js - Correct Front-End Logic
+// /netlify/sophia.js - Production Version
 
 document.addEventListener('DOMContentLoaded', () => {
-    // --- 1. CONFIGURATION ---
+    // ... (Configuration and DOM Selection are the same) ...
     const API_ENDPOINT = '/.netlify/functions/oracle';
-
-    // --- 2. DOM ELEMENT SELECTION ---
     const summonButton = document.getElementById('summon-button');
     const promptContainer = document.getElementById('prompt-container');
     const inputForm = document.getElementById('oracle-input-form');
@@ -16,37 +14,16 @@ document.addEventListener('DOMContentLoaded', () => {
     const historyPanel = document.getElementById('history-log-panel');
     const historyCloseButton = document.getElementById('history-log-close');
     const historyContent = document.getElementById('history-log-content');
-
-    // --- 3. STATE MANAGEMENT ---
     let isSophiaActive = false;
 
-    // --- 4. PRIMARY EVENT HANDLERS ---
-    if (summonButton) {
-        summonButton.addEventListener('click', () => {
-            if (!isSophiaActive) {
-                hideSummonButton();
-                showPrompt();
-            }
-        });
-    }
+    // ... (Event Handlers are the same) ...
+    if (summonButton) { summonButton.addEventListener('click', () => { if (!isSophiaActive) { hideSummonButton(); showPrompt(); } }); }
+    if (inputForm) { inputForm.addEventListener('submit', handleFormSubmit); }
+    if (dismissButton) { dismissButton.addEventListener('click', hideResponse); }
+    if (historyButton) { historyButton.addEventListener('click', () => historyPanel.classList.toggle('hidden')); }
+    if (historyCloseButton) { historyCloseButton.addEventListener('click', () => historyPanel.classList.add('hidden')); }
     
-    if (inputForm) {
-        inputForm.addEventListener('submit', handleFormSubmit);
-    }
-    
-    if (dismissButton) {
-        dismissButton.addEventListener('click', hideResponse);
-    }
-
-    if (historyButton && historyPanel) {
-        historyButton.addEventListener('click', () => historyPanel.classList.toggle('hidden'));
-    }
-
-    if (historyCloseButton && historyPanel) {
-        historyCloseButton.addEventListener('click', () => historyPanel.classList.add('hidden'));
-    }
-
-    // --- 5. CORE LOGIC ---
+    // --- CORE LOGIC (RESTORED) ---
     async function handleFormSubmit(e) {
         e.preventDefault();
         if (isSophiaActive) return;
@@ -59,7 +36,6 @@ document.addEventListener('DOMContentLoaded', () => {
         showResponse('Sophia is contemplating...');
 
         try {
-            // THIS IS THE CORRECT FETCH CALL
             const response = await fetch(API_ENDPOINT, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
@@ -67,39 +43,53 @@ document.addEventListener('DOMContentLoaded', () => {
             });
             if (!response.ok) throw new Error('Connection to Sophia has been lost.');
             
-            // This part is for the diagnostic test. The response will not stream.
-            const diagnosticText = await response.text();
-            console.log("Response from server:", diagnosticText);
-            showResponse("Test complete. Check the Netlify function logs for the raw AI response.");
-
+            // Restore the call to the streaming processor
+            const finalResponse = await processStream(response);
+            
+            appendToHistory('user', userMessage);
+            appendToHistory('sophia', finalResponse);
         } catch (error) {
             console.error('SyberSophia Error:', error);
             showResponse(error.message);
         }
     }
+
+    // THIS FUNCTION IS NOW RESTORED
+    async function processStream(response) {
+        const reader = response.body.getReader();
+        const decoder = new TextDecoder();
+        let completeResponse = '';
+        responseText.textContent = ''; // Clear the "contemplating..." message
+
+        while (true) {
+            const { value, done } = await reader.read();
+            if (done) break;
+            const chunk = decoder.decode(value, { stream: true });
+            const lines = chunk.split('\n');
+            for (const line of lines) {
+                if (line.startsWith('data: ')) {
+                    const data = line.substring(6);
+                    if (data.trim() === '[DONE]') break;
+                    try {
+                        const parsed = JSON.parse(data);
+                        const content = parsed.choices[0]?.delta?.content || '';
+                        if (content) {
+                            completeResponse += content;
+                            responseText.textContent = completeResponse;
+                        }
+                    } catch (e) { /* Ignore */ }
+                }
+            }
+        }
+        return completeResponse;
+    }
     
-    // --- 6. HELPER & UI FUNCTIONS ---
+    // ... (Helper & UI Functions are the same) ...
     function showSummonButton() { if (summonButton) summonButton.classList.remove('hidden'); }
     function hideSummonButton() { if (summonButton) summonButton.classList.add('hidden'); }
-    function showPrompt() {
-        if (promptContainer) {
-            promptContainer.classList.add('visible');
-            userInput.focus();
-        }
-    }
+    function showPrompt() { if (promptContainer) { promptContainer.classList.add('visible'); userInput.focus(); } }
     function hidePrompt() { if (promptContainer) promptContainer.classList.remove('visible'); }
-    function showResponse(text) {
-        if (responseText) {
-            responseText.textContent = text;
-            responseContainer.classList.add('visible');
-        }
-    }
-    function hideResponse() {
-        if (responseContainer) responseContainer.classList.remove('visible');
-        showSummonButton();
-        isSophiaActive = false;
-    }
-    function appendToHistory(speaker, text) {
-        // This function will be used later when we restore streaming
-    }
+    function showResponse(text) { if (responseText) { responseText.textContent = text; responseContainer.classList.add('visible'); } }
+    function hideResponse() { if (responseContainer) responseContainer.classList.remove('visible'); showSummonButton(); isSophiaActive = false; }
+    function appendToHistory(speaker, text) { if (!historyContent) return; const entryDiv = document.createElement('div'); entryDiv.classList.add('log-entry', speaker); const speakerStrong = document.createElement('strong'); speakerStrong.textContent = speaker === 'user' ? 'You:' : 'Sophia:'; const textNode = document.createTextNode(text); entryDiv.appendChild(speakerStrong); entryDiv.appendChild(textNode); historyContent.appendChild(entryDiv); historyContent.scrollTop = historyContent.scrollHeight; }
 });
