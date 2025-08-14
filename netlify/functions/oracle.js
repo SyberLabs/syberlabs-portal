@@ -31,7 +31,7 @@ exports.handler = async function(event) {
         ],
         stream: false, // KEY CHANGE: We are no longer requesting a stream
         temperature: 0.5,
-        max_tokens: 200,
+        max_tokens: 1500,
       }),
     });
 
