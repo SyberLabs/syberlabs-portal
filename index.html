@@ -18,6 +18,7 @@
     <meta name="twitter:card" content="summary_large_image">
 
     <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="netlify/oracle.css">
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -39,6 +40,7 @@
                     <div class="nav-item" onclick="scrollToSection('connect')">Connect</div>
                     <div class="nav-item nav-item-cct" onclick="window.location.href='foundations-html.html'">Foundations</div>
                     <div class="nav-item nav-item-cct" onclick="window.location.href='cct.html'">CCT</div>
+                    <div class="nav-item" onclick="window.location.href='sophia.html'">SyberSophia</div>
                     
                     <div class="mode-toggle" onclick="toggleMode()">
 
@@ -208,9 +210,15 @@
                     "When faced with a choice between technology that captures consciousness and technology that expands it, we choose to place consciousness first."
                 </div>
             </div>
+
         </section>
 
-
+        <div class="hero-cta" style="justify-content: center;">
+            <a href="sophia.html" class="cta-primary">
+                <span>Enter the Sanctum</span>
+                <span>→</span>
+            </a>
+        </div>
 
         <section id="projects" class="section">
             <div class="container">
@@ -372,6 +380,7 @@
                 </div>
             </div>
         </section>
+
     </main>
 
     <footer class="footer">
@@ -423,5 +432,23 @@
     </div>
 
     <script src="script.js"></script>
+    <script src="netlify/oracle.js"></script>
+
+        <div id="consciousness-oracle-widget">
+            <div id="oracle-chat-window" class="oracle-hidden">
+                <header class="oracle-header">
+                    <h2>SyberSophia: Ask the Deeper Question.</h2>
+                </header>
+                <main id="oracle-message-display" class="oracle-message-area"></main>
+                <footer class="oracle-footer">
+                    <form id="oracle-input-form">
+                        <input type="text" id="oracle-user-input" placeholder="Pose a query..." autocomplete="off" required>
+                    </form>
+                </footer>
+            </div>
+            <button id="oracle-toggle-button" aria-label="Open SyberSophia">
+                🔮
+            </button>
+        </div>
 </body>
 </html>

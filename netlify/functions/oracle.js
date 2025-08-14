@@ -20,6 +20,12 @@ const fetch = require('node-fetch');
 
 // The main handler for the serverless function.
 exports.handler = async function(event) {
+  if (event.httpMethod !== 'POST') {
+    return {
+      statusCode: 405,
+      body: 'Method Not Allowed',
+    };
+  }
   // 1. Ensure the request is a POST request.
   if (event.httpMethod !== 'POST') {
     return {

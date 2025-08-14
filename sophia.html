@@ -1,0 +1,662 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Consciousness Oracle</title>
+    <link rel="stylesheet" href="netlify/oracle.css">
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            background: #0a0a0f;
+            overflow: hidden;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            cursor: none;
+        }
+        
+        canvas {
+            filter: contrast(1.1) brightness(1.05);
+        }
+        
+        #oracle-cursor {
+            position: fixed;
+            width: 20px;
+            height: 20px;
+            border: 2px solid rgba(135, 206, 235, 0.6);
+            border-radius: 50%;
+            pointer-events: none;
+            mix-blend-mode: screen;
+            transition: transform 0.15s ease-out;
+            z-index: 9999;
+        }
+        
+        #sybersophia-full-interface {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%); /* Center the window */
+            width: 90%;
+            max-width: 600px; /* Make it wider for a full-screen view */
+            height: 70vh;
+            background-color: rgba(16, 21, 36, 0.75); /* Semi-transparent background */
+            backdrop-filter: blur(10px); /* Glassmorphism effect */
+            border: 1px solid rgba(135, 206, 235, 0.2);
+            border-radius: 12px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            z-index: 10;
+
+            /* Re-use your flexbox layout from before */
+            display: flex;
+            flex-direction: column;
+        }
+        .ephemeral {
+            position: absolute;
+            text-align: center;
+            width: 80%;
+            max-width: 700px;
+            left: 50%;
+            transform: translateX(-50%);
+            opacity: 0; /* Hidden by default */
+            transition: opacity 1.5s ease-in-out;
+            pointer-events: none; /* Can't interact with when hidden */
+        }
+
+        .ephemeral.visible {
+            opacity: 1;
+            pointer-events: all;
+        }
+
+        #prompt-container {
+            bottom: 10%;
+        }
+
+        #response-container {
+            top: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 1.5rem;
+            color: #e0e0e0;
+            text-shadow: 0 0 15px rgba(135, 206, 235, 0.7);
+        }
+
+        /* sophia.html <style> tag */
+
+        /* Scribe's Log Button */
+        #history-log-button {
+            position: fixed;
+            top: 20px;
+            right: 25px;
+            background: none;
+            border: none;
+            font-size: 2rem; /* A good size for a touch target */
+            color: white;
+            opacity: 0.6;
+            cursor: pointer;
+            z-index: 101; /* Must be on top of the panel */
+            transition: opacity 0.3s ease, transform 0.3s ease;
+        }
+
+        #history-log-button:hover {
+            opacity: 1;
+            transform: scale(1.1);
+        }
+
+        /* The Log Panel Container */
+        #history-log-panel {
+            position: fixed;
+            top: 0;
+            right: 0;
+            width: 400px;
+            max-width: 90vw; /* Responsive for smaller screens */
+            height: 100%;
+            background-color: rgba(16, 21, 36, 0.85); /* Dark, semi-transparent */
+            backdrop-filter: blur(12px);
+            border-left: 1px solid rgba(135, 206, 235, 0.2);
+            box-shadow: -5px 0 30px rgba(0, 0, 0, 0.3);
+            z-index: 100;
+
+            display: flex;
+            flex-direction: column;
+
+            /* Animation setup */
+            transform: translateX(0); /* Default is visible */
+            transition: transform 0.6s cubic-bezier(0.25, 1, 0.5, 1);
+        }
+
+        /* The Hidden State Animation */
+        #history-log-panel.hidden {
+            transform: translateX(100%); /* Moves it off-screen to the right */
+        }
+
+        /* Internal Panel Header */
+        .log-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 1.5rem;
+            border-bottom: 1px solid rgba(135, 206, 235, 0.2);
+            color: #e0e0e0;
+        }
+
+        .log-header h2 {
+            margin: 0;
+            font-size: 1.2rem;
+            font-weight: 500;
+        }
+
+        /* Close Button */
+        #history-log-close {
+            background: none;
+            border: none;
+            font-size: 2rem;
+            color: #e0e0e0;
+            opacity: 0.7;
+            cursor: pointer;
+            padding: 0;
+            line-height: 1;
+        }
+        #history-log-close:hover {
+            opacity: 1;
+        }
+
+
+        /* Log Content Area */
+        #history-log-content {
+            flex-grow: 1;
+            overflow-y: auto;
+            padding: 1.5rem;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+        }
+
+        /* Individual Log Entry Styles */
+        .log-entry {
+            margin-bottom: 1.25rem;
+            line-height: 1.6;
+        }
+        .log-entry strong { /* The speaker label (e.g., "You:") */
+            display: block;
+            margin-bottom: 0.25rem;
+            font-weight: 600;
+            opacity: 0.9;
+        }
+        .log-entry.user strong {
+            color: #a7c7e7; /* A calm blue for the user */
+        }
+        .log-entry.sophia strong {
+            color: #d1b4de; /* A mystical purple for Sophia */
+        }
+        /* Add this to your existing <style> block in sophia.html */
+
+        #summon-button {
+            position: absolute;
+            top: 95%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            z-index: 10;
+            
+            background-color: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            color: white;
+            font-size: 1.2rem;
+            font-family: 'Crimson Text', serif; /* Using a font from your main site */
+            padding: 1rem 2rem;
+            border-radius: 30px;
+            cursor: pointer;
+            
+            opacity: 0; /* Hidden by default, made visible by .visible */
+            transition: opacity 1.5s ease-in-out, background-color 0.3s ease;
+        }
+
+        #summon-button.visible {
+            opacity: 0.8;
+        }
+
+        #summon-button:hover {
+            background-color: rgba(255, 255, 255, 0.2);
+            opacity: 1;
+        }
+
+        /* This will hide the button once clicked */
+        #summon-button.hidden {
+            opacity: 0;
+            pointer-events: none;
+        }
+        
+
+        #response-container p {
+            margin: 0; /* Remove default paragraph margin */
+            padding: 0;
+        }
+
+        #dismiss-button {
+            background: none;
+            border: 1px solid rgba(255, 255, 255, 0.4);
+            color: rgba(255, 255, 255, 0.7);
+            border-radius: 20px;
+            padding: 8px 20px;
+            cursor: pointer;
+            margin-top: 2rem; /* Space between response and button */
+            font-size: 0.9rem;
+            opacity: 0.8;
+            transition: all 0.3s ease;
+        }
+
+        #dismiss-button:hover {
+            background-color: rgba(255, 255, 255, 0.1);
+            border-color: rgba(255, 255, 255, 0.8);
+            opacity: 1;
+        }
+
+        /* --- Glassmorphic Input Field --- */
+        #prompt-container {
+            /* This is the container for the input field */
+            padding: 1rem;
+            background-color: rgba(255, 255, 255, 0.08); /* Faint white background */
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 16px;
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+        }
+
+        #oracle-user-input {
+            /* This styles the actual <input> text field */
+            width: 400px;
+            max-width: 80vw;
+            background: none;
+            border: none;
+            outline: none;
+            color: white;
+            font-size: 1.2rem;
+            text-align: center;
+        }
+
+        /* Style the placeholder text */
+        #oracle-user-input::placeholder {
+            color: rgba(255, 255, 255, 0.5);
+            font-style: italic;
+        }
+
+
+        /* --- Glassmorphic Response Window --- */
+        #response-container {
+            /* Replaces previous styling for this element */
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 90%;
+            max-width: 650px;
+            padding: 2.5rem; /* More padding for a premium feel */
+            
+            background-color: rgba(16, 21, 36, 0.7); /* Darker, more readable background */
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(135, 206, 235, 0.2);
+            border-radius: 16px;
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.2);
+            
+            font-size: 1.5rem;
+            color: #e0e0e0;
+            text-shadow: 0 0 10px rgba(135, 206, 235, 0.5);
+
+            /* Ephemeral visibility styles */
+            opacity: 0;
+            transition: opacity 1.5s ease-in-out;
+            pointer-events: none;
+        }
+
+        #response-container.visible {
+            opacity: 1;
+            pointer-events: all;
+        }
+
+    </style>
+</head>
+<body>
+    <canvas id="oracle"></canvas>
+    <div id="oracle-cursor"></div>
+
+    <button id="summon-button" class="visible">Begin the Inquiry</button>
+    <div id="prompt-container" class="ephemeral">
+        <form id="oracle-input-form">
+            <input type="text" id="oracle-user-input" placeholder="Pose the deeper question..." autocomplete="off">
+        </form>
+    </div>
+
+    <div id="response-container" class="ephemeral">
+        <p id="response-text"></p>
+        <button id="dismiss-button" title="Dismiss">Done</button>
+    </div>
+
+    <button id="history-log-button" title="View Transcript">📜</button>
+
+    <div id="history-log-panel" class="hidden">
+        <header class="log-header">
+            <h2>Transcript</h2>
+            <button id="history-log-close" title="Close">&times;</button>
+        </header>
+        <div id="history-log-content">
+            </div>
+    </div>
+
+
+    <script src="netlify/oracle.js"></script> 
+    <script src="script.js"></script> 
+    <script>
+        const canvas = document.getElementById('oracle');
+        const ctx = canvas.getContext('2d');
+        const cursor = document.getElementById('oracle-cursor');
+        
+        // High DPI support
+        const dpr = window.devicePixelRatio || 1;
+        const size = Math.min(window.innerWidth, window.innerHeight);
+        canvas.width = size * dpr;
+        canvas.height = size * dpr;
+        canvas.style.width = size + 'px';
+        canvas.style.height = size + 'px';
+        ctx.scale(dpr, dpr);
+        
+        // Center point
+        const centerX = size / 2;
+        const centerY = size / 2;
+        
+        // State variables
+        let time = 0;
+        let mouseX = centerX;
+        let mouseY = centerY;
+        let contemplationDepth = 0;
+        let resonanceField = [];
+        let consciousnessNodes = [];
+        
+        // Initialize consciousness nodes
+        for (let i = 0; i < 7; i++) {
+            consciousnessNodes.push({
+                angle: (i / 7) * Math.PI * 2,
+                radius: size * 0.25,
+                phase: Math.random() * Math.PI * 2,
+                frequency: 0.5 + Math.random() * 0.5,
+                intensity: 0.5
+            });
+        }
+        
+        // Track mouse for oracle interaction
+        document.addEventListener('mousemove', (e) => {
+            mouseX = e.clientX;
+            mouseY = e.clientY;
+            
+            // Update cursor position
+            cursor.style.left = (mouseX - 10) + 'px';
+            cursor.style.top = (mouseY - 10) + 'px';
+            
+            // Calculate contemplation depth based on proximity to center
+            const dx = mouseX - centerX;
+            const dy = mouseY - centerY;
+            const distance = Math.sqrt(dx * dx + dy * dy);
+            contemplationDepth = 1 - Math.min(distance / (size * 0.4), 1);
+        });
+        
+        document.addEventListener('touchmove', (e) => {
+            e.preventDefault();
+            mouseX = e.touches[0].clientX;
+            mouseY = e.touches[0].clientY;
+            
+            const dx = mouseX - centerX;
+            const dy = mouseY - centerY;
+            const distance = Math.sqrt(dx * dx + dy * dy);
+            contemplationDepth = 1 - Math.min(distance / (size * 0.4), 1);
+        });
+        
+        // Sacred geometry functions
+        function drawSacredRecursion(x, y, radius, depth, phase) {
+            if (depth <= 0 || radius < 2) return;
+            
+            ctx.save();
+            ctx.translate(x, y);
+            ctx.rotate(phase);
+            
+            // Draw recursive circles with phi ratio
+            const phi = 1.618033988749895;
+            const childRadius = radius / phi;
+            
+            for (let i = 0; i < 6; i++) {
+                const angle = (i / 6) * Math.PI * 2;
+                const childX = radius * Math.cos(angle);
+                const childY = radius * Math.sin(angle);
+                
+                // Recursive call
+                drawSacredRecursion(childX, childY, childRadius, depth - 1, phase + angle);
+            }
+            
+            // Draw the current level circle
+            ctx.beginPath();
+            ctx.arc(0, 0, radius, 0, Math.PI * 2);
+            
+            const gradient = ctx.createRadialGradient(0, 0, 0, 0, 0, radius);
+            gradient.addColorStop(0, `rgba(135, 206, 235, ${0.1 * depth / 4})`);
+            gradient.addColorStop(0.5, `rgba(176, 196, 222, ${0.05 * depth / 4})`);
+            gradient.addColorStop(1, 'rgba(245, 245, 220, 0)');
+            
+            ctx.strokeStyle = gradient;
+            ctx.lineWidth = 0.5;
+            ctx.stroke();
+            
+            ctx.restore();
+        }
+        
+        function drawConsciousnessField() {
+            // Create flowing field lines representing consciousness streams
+            const fieldLines = 24;
+            
+            for (let i = 0; i < fieldLines; i++) {
+                const angle = (i / fieldLines) * Math.PI * 2;
+                
+                ctx.beginPath();
+                for (let t = 0; t <= 1; t += 0.01) {
+                    const wave = Math.sin(time * 2 + angle * 3 + t * Math.PI * 4) * 0.1;
+                    const spiral = t * Math.PI * 2 + time + angle;
+                    const radius = size * 0.1 + t * size * 0.35 * (1 + wave);
+                    
+                    const x = centerX + radius * Math.cos(spiral);
+                    const y = centerY + radius * Math.sin(spiral);
+                    
+                    if (t === 0) {
+                        ctx.moveTo(x, y);
+                    } else {
+                        ctx.lineTo(x, y);
+                    }
+                }
+                
+                const gradient = ctx.createLinearGradient(
+                    centerX - size * 0.4, centerY - size * 0.4,
+                    centerX + size * 0.4, centerY + size * 0.4
+                );
+                gradient.addColorStop(0, 'rgba(70, 130, 180, 0.1)');
+                gradient.addColorStop(0.5, 'rgba(135, 206, 235, 0.2)');
+                gradient.addColorStop(1, 'rgba(245, 245, 220, 0.1)');
+                
+                ctx.strokeStyle = gradient;
+                ctx.lineWidth = 1 + Math.sin(time + angle) * 0.5;
+                ctx.stroke();
+            }
+        }
+        
+        function drawMetaphysicalBridge() {
+            // Torus-like bridge between digital and consciousness realms
+            ctx.save();
+            ctx.globalCompositeOperation = 'screen';
+            
+            const segments = 120;
+            const torusRadius = size * 0.3;
+            const tubeRadius = size * 0.1;
+            
+            for (let i = 0; i < segments; i++) {
+                const u = (i / segments) * Math.PI * 2;
+                
+                ctx.beginPath();
+                for (let j = 0; j <= segments / 2; j++) {
+                    const v = (j / (segments / 2)) * Math.PI * 2;
+                    
+                    // Torus parametric equations with modifications
+                    const wave = Math.sin(time + u * 2 + v) * 0.2;
+                    const r = tubeRadius * (1 + wave);
+                    
+                    const x = centerX + (torusRadius + r * Math.cos(v)) * Math.cos(u);
+                    const y = centerY + (torusRadius + r * Math.cos(v)) * Math.sin(u);
+                    
+                    if (j === 0) {
+                        ctx.moveTo(x, y);
+                    } else {
+                        ctx.lineTo(x, y);
+                    }
+                }
+                
+                const alpha = 0.05 + contemplationDepth * 0.1;
+                const gradient = ctx.createRadialGradient(centerX, centerY, 0, centerX, centerY, size * 0.5);
+                gradient.addColorStop(0, `rgba(176, 196, 222, ${alpha})`);
+                gradient.addColorStop(0.5, `rgba(135, 206, 235, ${alpha * 0.8})`);
+                gradient.addColorStop(1, `rgba(245, 245, 220, ${alpha * 0.4})`);
+                
+                ctx.strokeStyle = gradient;
+                ctx.lineWidth = 0.5;
+                ctx.stroke();
+            }
+            
+            ctx.restore();
+        }
+        
+        function drawConsciousnessNodes() {
+            // Interactive nodes representing aspects of consciousness
+            consciousnessNodes.forEach((node, index) => {
+                // Update node based on interaction
+                const nodeX = centerX + node.radius * Math.cos(node.angle + time * 0.1);
+                const nodeY = centerY + node.radius * Math.sin(node.angle + time * 0.1);
+                
+                const dx = mouseX - nodeX;
+                const dy = mouseY - nodeY;
+                const distance = Math.sqrt(dx * dx + dy * dy);
+                const influence = Math.max(0, 1 - distance / (size * 0.2));
+                
+                node.intensity = 0.5 + influence * 0.5;
+                
+                // Draw node with resonance
+                const pulsePhase = time * node.frequency + node.phase;
+                const pulseSize = 20 + Math.sin(pulsePhase) * 10 * node.intensity;
+                
+                // Outer resonance rings
+                for (let ring = 3; ring > 0; ring--) {
+                    ctx.beginPath();
+                    ctx.arc(nodeX, nodeY, pulseSize * ring * 0.5, 0, Math.PI * 2);
+                    
+                    const alpha = (0.1 / ring) * node.intensity;
+                    ctx.strokeStyle = `rgba(135, 206, 235, ${alpha})`;
+                    ctx.lineWidth = 1;
+                    ctx.stroke();
+                }
+                
+                // Core node
+                const gradient = ctx.createRadialGradient(nodeX, nodeY, 0, nodeX, nodeY, pulseSize);
+                gradient.addColorStop(0, `rgba(245, 245, 220, ${0.8 * node.intensity})`);
+                gradient.addColorStop(0.4, `rgba(176, 196, 222, ${0.6 * node.intensity})`);
+                gradient.addColorStop(0.7, `rgba(135, 206, 235, ${0.4 * node.intensity})`);
+                gradient.addColorStop(1, 'rgba(70, 130, 180, 0)');
+                
+                ctx.beginPath();
+                ctx.arc(nodeX, nodeY, pulseSize, 0, Math.PI * 2);
+                ctx.fillStyle = gradient;
+                ctx.fill();
+            });
+        }
+        
+        function drawCentralOracle() {
+            // Central oracle eye - the interface between user and consciousness
+            const oracleRadius = size * 0.08 + contemplationDepth * size * 0.02;
+            
+            // Iris patterns
+            ctx.save();
+            ctx.translate(centerX, centerY);
+            
+            for (let layer = 0; layer < 3; layer++) {
+                ctx.rotate(time * (0.1 + layer * 0.05));
+                
+                const segments = 36;
+                for (let i = 0; i < segments; i++) {
+                    const angle = (i / segments) * Math.PI * 2;
+                    
+                    ctx.beginPath();
+                    ctx.moveTo(0, 0);
+                    
+                    const r1 = oracleRadius * (0.3 + layer * 0.3);
+                    const r2 = oracleRadius * (0.5 + layer * 0.3);
+                    
+                    ctx.lineTo(r1 * Math.cos(angle), r1 * Math.sin(angle));
+                    ctx.lineTo(r2 * Math.cos(angle + 0.1), r2 * Math.sin(angle + 0.1));
+                    
+                    const gradient = ctx.createLinearGradient(0, 0, r2 * Math.cos(angle), r2 * Math.sin(angle));
+                    gradient.addColorStop(0, `rgba(245, 245, 220, ${0.3 - layer * 0.1})`);
+                    gradient.addColorStop(1, `rgba(135, 206, 235, ${0.1 - layer * 0.03})`);
+                    
+                    ctx.fillStyle = gradient;
+                    ctx.fill();
+                }
+            }
+            
+            ctx.restore();
+            
+            // Central pupil
+            const pupilGradient = ctx.createRadialGradient(centerX, centerY, 0, centerX, centerY, oracleRadius * 0.3);
+            pupilGradient.addColorStop(0, 'rgba(25, 25, 112, 0.9)');
+            pupilGradient.addColorStop(0.5, 'rgba(70, 130, 180, 0.7)');
+            pupilGradient.addColorStop(1, 'rgba(135, 206, 235, 0.3)');
+            
+            ctx.beginPath();
+            ctx.arc(centerX, centerY, oracleRadius * 0.3, 0, Math.PI * 2);
+            ctx.fillStyle = pupilGradient;
+            ctx.fill();
+        }
+        
+        function animate() {
+            // Subtle fade for trail effect
+            ctx.fillStyle = 'rgba(10, 10, 15, 0.05)';
+            ctx.fillRect(0, 0, size, size);
+            
+            time += 0.01;
+            
+            // Update cursor style based on contemplation depth
+            cursor.style.transform = `scale(${1 + contemplationDepth * 0.5})`;
+            cursor.style.borderColor = `rgba(135, 206, 235, ${0.6 + contemplationDepth * 0.4})`;
+            
+            // Layer 1: Consciousness field
+            drawConsciousnessField();
+            
+            // Layer 2: Sacred recursion patterns
+            drawSacredRecursion(centerX, centerY, size * 0.35, 4, time * 0.3);
+            
+            // Layer 3: Metaphysical bridge
+            drawMetaphysicalBridge();
+            
+            // Layer 4: Consciousness nodes
+            drawConsciousnessNodes();
+            
+            // Layer 5: Central oracle
+            drawCentralOracle();
+            
+            requestAnimationFrame(animate);
+        }
+        
+        // Initialize
+        animate();
+        
+        // Handle resize
+        window.addEventListener('resize', () => {
+            const newSize = Math.min(window.innerWidth, window.innerHeight);
+            canvas.width = newSize * dpr;
+            canvas.height = newSize * dpr;
+            canvas.style.width = newSize + 'px';
+            canvas.style.height = newSize + 'px';
+            ctx.scale(dpr, dpr);
+        });
+    </script>
+</body>
+</html>

@@ -1,10 +1,6 @@
 [build]
-  # Directory containing your serverless functions
-  functions = "functions/"
-  
-  # Directory containing your front-end files (HTML, CSS, JS)
-  publish = "public/"
+  publish = "."
 
 [functions]
-  # Ensures the back-end 'node-fetch' dependency is included
+  directory = "netlify/functions/"
   node_bundler = "esbuild"
