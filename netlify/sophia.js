@@ -2,7 +2,7 @@
 
 document.addEventListener('DOMContentLoaded', () => {
     // --- 1. CONFIGURATION ---
-    const API_ENDPOINT = '/netlify/functions/oracle';
+    const API_ENDPOINT = '/.netlify/functions/oracle';
 
     // --- 2. DOM ELEMENT SELECTION ---
     const summonButton = document.getElementById('summon-button');

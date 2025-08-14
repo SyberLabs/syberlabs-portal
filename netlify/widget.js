@@ -7,7 +7,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const messageDisplay = document.getElementById('oracle-message-display');
     const inputForm = document.getElementById('oracle-input-form');
     const userInput = document.getElementById('oracle-user-input');
-    const oracleApiEndpoint = '/netlify/functions/oracle';
+    const oracleApiEndpoint = '/.netlify/functions/oracle';
 
     // --- 2. Widget Event Listeners ---
     if (toggleButton) {
