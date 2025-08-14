@@ -1,7 +1,8 @@
-// /netlify/functions/oracle.js - FINAL PRODUCTION VERSION
+// /netlify/functions/oracle.js - CORRECTED VERSION
 
 const fetch = require('node-fetch');
-const { Readable } = require('stream'); // Import the Readable stream utility
+// The 'stream' module is no longer needed
+// const { Readable } = require('stream');
 
 exports.handler = async function(event) {
   if (event.httpMethod !== 'POST') {
@@ -42,26 +43,25 @@ exports.handler = async function(event) {
       console.error(`AI API Error: ${aiResponse.status} ${aiResponse.statusText}`, errorBody);
       throw new Error('Failed to get a valid response from the AI service.');
     }
-
-    // Convert the node-fetch stream to a standard Node.js Readable stream
-    const readableNodeStream = Readable.from(aiResponse.body);
-
-    return {
-      statusCode: 200,
+    
+    // 💡 FIX: Return a standards-compliant Response object.
+    // This allows Netlify to correctly handle the stream from the DeepSeek API 
+    // and pipe it to your frontend client.
+    return new Response(aiResponse.body, {
+      status: 200,
       headers: {
         'Content-Type': 'text/event-stream',
         'Cache-Control': 'no-cache',
         'Connection': 'keep-alive',
       },
-      body: readableNodeStream,
-      isBase64Encoded: false,
-    };
+    });
 
   } catch (error) {
     console.error('Oracle function execution error:', error.message);
-    return {
-      statusCode: 500,
-      body: JSON.stringify({ error: 'The Oracle encountered an internal error.' }),
-    };
+    // Return a standard response object for errors
+    return new Response(JSON.stringify({ error: 'The Oracle encountered an internal error.' }), {
+      status: 500,
+      headers: { 'Content-Type': 'application/json' },
+    });
   }
 };
