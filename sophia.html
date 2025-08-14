@@ -136,15 +136,21 @@
             border: 1px solid rgba(135, 206, 235, 0.2);
             border-radius: 16px;
             box-shadow: 0 4px 30px rgba(0, 0, 0, 0.2);
+
+            max-height: 70vh; /* Set a max height */
+            display: flex; /* Turn on flexbox */
+            flex-direction: column; /* Stack children vertically */
         }
 
         #response-text {
             margin: 0;
             padding: 0;
-            font-size: 0.7rem;
+            font-size: 1rem;
             color: #e0e0e0;
             text-shadow: 0 0 10px rgba(135, 206, 235, 0.5);
             line-height: 1.6;
+            flex-grow: 1; /* Allow this element to grow */
+            overflow-y: auto; /* Add a scrollbar only when needed */
         }
 
         #dismiss-button {
