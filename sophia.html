@@ -3,25 +3,29 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Consciousness Oracle</title>
-    <link rel="stylesheet" href="netlify/oracle.css">
+    <title>Sophia: Ask the Deeper Question</title>
     <style>
+        /*
+            Final Consolidated Stylesheet for sophia.html
+        */
+
+        /* --- General Body & Canvas --- */
         body {
             margin: 0;
             padding: 0;
             background: #0a0a0f;
             overflow: hidden;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            cursor: none;
             display: flex;
             justify-content: center;
             align-items: center;
-            height: 100vh;
-            cursor: none;
         }
-        
+
         canvas {
             filter: contrast(1.1) brightness(1.05);
         }
-        
+
         #oracle-cursor {
             position: fixed;
             width: 20px;
@@ -33,22 +37,22 @@
             transition: transform 0.15s ease-out;
             z-index: 9999;
         }
+
+        /* --- Top-Level UI (Logos & Buttons) --- */
         #home-logo {
             position: fixed;
             top: 25px;
             left: 30px;
             color: white;
             text-decoration: none;
-            font-family: 'Space Grotesk', sans-serif; /* A font from your main site */
+            font-family: 'Space Grotesk', sans-serif;
             font-weight: 500;
             font-size: 1.2rem;
             opacity: 0.6;
             z-index: 110;
             transition: opacity 0.3s ease;
         }
-        #home-logo:hover {
-            opacity: 1;
-        }
+        #home-logo:hover { opacity: 1; }
 
         #history-log-button {
             position: fixed;
@@ -63,222 +67,46 @@
             z-index: 110;
             transition: opacity 0.3s ease, transform 0.3s ease;
         }
-        #history-log-button:hover {
-            opacity: 1;
-            transform: scale(1.1);
-        }
-        
-    .ephemeral {
-        position: absolute;
-        left: 50%; /* This centers the element's left edge */
-        transform: translateX(-50%); /* This shifts it back by half its own width */
-        text-align: center;
-        opacity: 0;
-        pointer-events: none;
-        transition: opacity 1.5s ease-in-out;
-    }
-    .ephemeral.visible { 
-        opacity: 1; 
-        pointer-events: all; 
-    }
+        #history-log-button:hover { opacity: 1; transform: scale(1.1); }
 
-    #prompt-container {
-        bottom: 10%;
-        padding: 1rem;
-        background-color: rgba(255, 255, 255, 0.08);
-        backdrop-filter: blur(10px);
-        border: 1px solid rgba(255, 255, 255, 0.2);
-        border-radius: 16px;
-        box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
-    }
-
-    #response-container {
-        top: 50%;
-        /* The Y-transform is added here to vertically center it */
-        transform: translate(-50%, -50%); 
-        width: 90%;
-        max-width: 650px;
-        padding: 2.5rem;
-        background-color: rgba(16, 21, 36, 0.7);
-        backdrop-filter: blur(12px);
-        border: 1px solid rgba(135, 206, 235, 0.2);
-        border-radius: 16px;
-        box-shadow: 0 4px 30px rgba(0, 0, 0, 0.2);
-    }
-
-        /* sophia.html <style> tag */
-
-        /* Scribe's Log Button */
-        #history-log-button {
-            position: fixed;
-            top: 20px;
-            right: 25px;
-            background: none;
-            border: none;
-            font-size: 2rem; /* A good size for a touch target */
-            color: white;
-            opacity: 0.6;
-            cursor: pointer;
-            z-index: 101; /* Must be on top of the panel */
-            transition: opacity 0.3s ease, transform 0.3s ease;
-        }
-
-        #history-log-button:hover {
-            opacity: 1;
-            transform: scale(1.1);
-        }
-
-        /* The Log Panel Container */
-        #history-log-panel {
-            position: fixed;
-            top: 0;
-            right: 0;
-            width: 400px;
-            max-width: 90vw; /* Responsive for smaller screens */
-            height: 100%;
-            background-color: rgba(16, 21, 36, 0.85); /* Dark, semi-transparent */
-            backdrop-filter: blur(12px);
-            border-left: 1px solid rgba(135, 206, 235, 0.2);
-            box-shadow: -5px 0 30px rgba(0, 0, 0, 0.3);
-            z-index: 110;
-
-            display: flex;
-            flex-direction: column;
-
-            /* Animation setup */
-            transform: translateX(0); /* Default is visible */
-            transition: transform 0.6s cubic-bezier(0.25, 1, 0.5, 1);
-        }
-
-        /* The Hidden State Animation */
-        #history-log-panel.hidden {
-            transform: translateX(100%); /* Moves it off-screen to the right */
-        }
-
-        /* Internal Panel Header */
-        .log-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 1rem 1.5rem;
-            border-bottom: 1px solid rgba(135, 206, 235, 0.2);
-            color: #e0e0e0;
-        }
-
-        .log-header h2 {
-            margin: 0;
-            font-size: 1.2rem;
-            font-weight: 500;
-        }
-
-        /* Close Button */
-        #history-log-close {
-            background: none;
-            border: none;
-            font-size: 2rem;
-            color: #e0e0e0;
-            opacity: 0.7;
-            cursor: pointer;
-            padding: 0;
-            line-height: 1;
-        }
-        #history-log-close:hover {
-            opacity: 1;
-        }
-
-
-        /* Log Content Area */
-        #history-log-content {
-            flex-grow: 1;
-            overflow-y: auto;
-            padding: 1.5rem;
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-        }
-
-        /* Individual Log Entry Styles */
-        .log-entry {
-            margin-bottom: 1.25rem;
-            line-height: 1.6;
-        }
-        .log-entry strong { /* The speaker label (e.g., "You:") */
-            display: block;
-            margin-bottom: 0.25rem;
-            font-weight: 600;
-            opacity: 0.9;
-        }
-        .log-entry.user strong {
-            color: #a7c7e7; /* A calm blue for the user */
-        }
-        .log-entry.sophia strong {
-            color: #d1b4de; /* A mystical purple for Sophia */
-        }
-        /* Add this to your existing <style> block in sophia.html */
-
+        /* --- Initial Summon Button --- */
         #summon-button {
             position: absolute;
-            top: 95%;
+            top: 87%;
             left: 50%;
             transform: translate(-50%, -50%);
             z-index: 10;
-            
             background-color: rgba(255, 255, 255, 0.1);
             border: 1px solid rgba(255, 255, 255, 0.3);
             color: white;
             font-size: 1.2rem;
-            font-family: 'Crimson Text', serif; /* Using a font from your main site */
+            font-family: 'Crimson Text', serif;
             padding: 1rem 2rem;
             border-radius: 30px;
             cursor: pointer;
-            
-            opacity: 0; /* Hidden by default, made visible by .visible */
+            opacity: 0;
             transition: opacity 1.5s ease-in-out, background-color 0.3s ease;
         }
+        #summon-button.visible { opacity: 0.8; }
+        #summon-button:hover { background-color: rgba(255, 255, 255, 0.2); opacity: 1; }
+        #summon-button.hidden { opacity: 0; pointer-events: none; }
 
-        #summon-button.visible {
-            opacity: 0.8;
-        }
-
-        #summon-button:hover {
-            background-color: rgba(255, 255, 255, 0.2);
-            opacity: 1;
-        }
-
-        /* This will hide the button once clicked */
-        #summon-button.hidden {
+        /* --- Ephemeral Prompt & Response Windows --- */
+        .ephemeral {
+            position: absolute;
+            left: 50%;
+            transform: translateX(-50%);
+            text-align: center;
             opacity: 0;
             pointer-events: none;
+            transition: opacity 1.5s ease-in-out;
         }
-        
+        .ephemeral.visible { opacity: 1; pointer-events: all; }
 
-        #response-container p {
-            margin: 0; /* Remove default paragraph margin */
-            padding: 0;
-        }
-
-        #dismiss-button {
-            background: none;
-            border: 1px solid rgba(255, 255, 255, 0.4);
-            color: rgba(255, 255, 255, 0.7);
-            border-radius: 20px;
-            padding: 8px 20px;
-            cursor: pointer;
-            margin-top: 2rem; /* Space between response and button */
-            font-size: 0.9rem;
-            opacity: 0.8;
-            transition: all 0.3s ease;
-        }
-
-        #dismiss-button:hover {
-            background-color: rgba(255, 255, 255, 0.1);
-            border-color: rgba(255, 255, 255, 0.8);
-            opacity: 1;
-        }
-
-        /* --- Glassmorphic Input Field --- */
         #prompt-container {
-            /* This is the container for the input field */
+            bottom: 10%;
             padding: 1rem;
-            background-color: rgba(255, 255, 255, 0.08); /* Faint white background */
+            background-color: rgba(255, 255, 255, 0.08);
             backdrop-filter: blur(10px);
             border: 1px solid rgba(255, 255, 255, 0.2);
             border-radius: 16px;
@@ -286,7 +114,6 @@
         }
 
         #oracle-user-input {
-            /* This styles the actual <input> text field */
             width: 400px;
             max-width: 80vw;
             background: none;
@@ -296,54 +123,101 @@
             font-size: 1.2rem;
             text-align: center;
         }
+        #oracle-user-input::placeholder { color: rgba(255, 255, 255, 0.5); font-style: italic; }
 
-        /* Style the placeholder text */
-        #oracle-user-input::placeholder {
-            color: rgba(255, 255, 255, 0.5);
-            font-style: italic;
-        }
-
-
-        /* --- Glassmorphic Response Window --- */
         #response-container {
-            /* Replaces previous styling for this element */
-            position: absolute;
             top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
+            transform: translate(-50%, -50%); 
             width: 90%;
             max-width: 650px;
-            padding: 2.5rem; /* More padding for a premium feel */
-            
-            background-color: rgba(16, 21, 36, 0.7); /* Darker, more readable background */
+            padding: 2.5rem;
+            background-color: rgba(16, 21, 36, 0.7);
             backdrop-filter: blur(12px);
             border: 1px solid rgba(135, 206, 235, 0.2);
             border-radius: 16px;
             box-shadow: 0 4px 30px rgba(0, 0, 0, 0.2);
-            
+        }
+
+        #response-text {
+            margin: 0;
+            padding: 0;
             font-size: 1.5rem;
             color: #e0e0e0;
             text-shadow: 0 0 10px rgba(135, 206, 235, 0.5);
-
-            /* Ephemeral visibility styles */
-            opacity: 0;
-            transition: opacity 1.5s ease-in-out;
-            pointer-events: none;
+            line-height: 1.6;
         }
 
-        #response-container.visible {
+        #dismiss-button {
+            background: none;
+            border: 1px solid rgba(255, 255, 255, 0.4);
+            color: rgba(255, 255, 255, 0.7);
+            border-radius: 20px;
+            padding: 8px 20px;
+            cursor: pointer;
+            margin-top: 2rem;
+            font-size: 0.9rem;
+            opacity: 0.8;
+            transition: all 0.3s ease;
+        }
+        #dismiss-button:hover {
+            background-color: rgba(255, 255, 255, 0.1);
+            border-color: rgba(255, 255, 255, 0.8);
             opacity: 1;
-            pointer-events: all;
         }
 
+        /* --- History Log Panel --- */
+        #history-log-panel {
+            position: fixed;
+            top: 0;
+            right: 0;
+            width: 400px;
+            max-width: 90vw;
+            height: 100%;
+            background-color: rgba(16, 21, 36, 0.85);
+            backdrop-filter: blur(12px);
+            border-left: 1px solid rgba(135, 206, 235, 0.2);
+            box-shadow: -5px 0 30px rgba(0, 0, 0, 0.3);
+            z-index: 1000;
+            display: flex;
+            flex-direction: column;
+            transform: translateX(100%);
+            transition: transform 0.6s cubic-bezier(0.25, 1, 0.5, 1);
+        }
+        #history-log-panel:not(.hidden) {
+            transform: translateX(0);
+        }
+        .log-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 1.5rem;
+            border-bottom: 1px solid rgba(135, 206, 235, 0.2);
+            color: #e0e0e0;
+        }
+        .log-header h2 { margin: 0; font-size: 1.2rem; font-weight: 500; }
+        #history-log-close {
+            background: none; border: none; font-size: 2rem;
+            color: #e0e0e0; opacity: 0.7; cursor: pointer;
+            padding: 0; line-height: 1;
+        }
+        #history-log-close:hover { opacity: 1; }
+        #history-log-content {
+            flex-grow: 1; overflow-y: auto; padding: 1.5rem;
+        }
+        .log-entry { margin-bottom: 1.25rem; line-height: 1.6; }
+        .log-entry strong { display: block; margin-bottom: 0.25rem; font-weight: 600; opacity: 0.9; }
+        .log-entry.user strong { color: #a7c7e7; }
+        .log-entry.sophia strong { color: #d1b4de; }
     </style>
 </head>
 <body>
     <a href="index.html" id="home-logo" title="Return to SyberLabs Home">SyberLabs</a>
+    
     <canvas id="oracle"></canvas>
     <div id="oracle-cursor"></div>
 
-    <button id="summon-button" class="visible">Begin the Inquiry</button>
+    <button id="summon-button" class="visible" type="button">Begin the Inquiry</button>
+
     <div id="prompt-container" class="ephemeral">
         <form id="oracle-input-form">
             <input type="text" id="oracle-user-input" placeholder="Pose the deeper question..." autocomplete="off">
@@ -352,22 +226,22 @@
 
     <div id="response-container" class="ephemeral">
         <p id="response-text"></p>
-        <button id="dismiss-button" title="Dismiss">Done</button>
+        <button id="dismiss-button" title="Dismiss" type="button">Done</button>
     </div>
 
-    <button id="history-log-button" title="View Transcript">📜</button>
+    <button id="history-log-button" title="View Transcript" type="button">📜</button>
 
     <div id="history-log-panel" class="hidden">
         <header class="log-header">
             <h2>Transcript</h2>
-            <button id="history-log-close" title="Close">&times;</button>
+            <button id="history-log-close" title="Close" type="button">&times;</button>
         </header>
-        <div id="history-log-content">
-            </div>
+        <div id="history-log-content"></div>
     </div>
 
 
-    <script src="netlify/oracle.js"></script> 
+    <script src="netlify/sophia.js"></script> 
+    
     <script>
         const canvas = document.getElementById('oracle');
         const ctx = canvas.getContext('2d');

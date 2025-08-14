@@ -672,49 +672,6 @@ body {
     opacity: 0.2;
 }
 
-/* Consciousness Meter */
-.consciousness-meter {
-    position: fixed;
-    bottom: 2rem;
-    right: 2rem;
-    background: var(--glass-bg);
-    backdrop-filter: blur(10px);
-    border: 1px solid var(--glass-border);
-    padding: 1rem;
-    border-radius: 20px;
-    width: 200px;
-    opacity: 0;
-    transform: translateY(20px);
-    transition: all 0.3s ease;
-    z-index: 100;
-}
-
-.consciousness-meter.active {
-    opacity: 1;
-    transform: translateY(0);
-}
-
-.meter-label {
-    font-size: 0.75rem;
-    color: var(--text-secondary);
-    margin-bottom: 0.5rem;
-    font-family: var(--font-display);
-}
-
-.meter-bar {
-    height: 6px;
-    background: rgba(52, 152, 219, 0.2);
-    border-radius: 3px;
-    overflow: hidden;
-}
-
-.meter-fill {
-    height: 100%;
-    background: var(--primary-gradient);
-    width: 0%;
-    transition: width 1s ease;
-    border-radius: 3px;
-}
 
 /* --- Abstract Spirit Form Animation --- */
 .mandala-wrapper {
@@ -1434,7 +1391,6 @@ button:focus,
 }
 
 /* --- MVP Disclaimer Panel & Button --- */
-/* --- MVP Disclaimer Panel - Revised --- */
 .mvp-disclaimer {
     background: #2c3e50; /* A duller, darker blue */
     color: #e0cba8; /* A softer beige */

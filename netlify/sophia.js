@@ -1,12 +1,6 @@
-/**
- * SyberSophia - Ephemeral Interface Logic v3 (User-Controlled Dismissal)
- *
- * This final version removes the automatic timer and adds a dismiss button,
- * giving the user full control over the contemplative loop.
- */
+// /netlify/sophia.js - Logic for the ephemeral interface on sophia.html
 
 document.addEventListener('DOMContentLoaded', () => {
-
     // --- 1. CONFIGURATION ---
     const API_ENDPOINT = '/netlify/functions/oracle';
 
@@ -16,8 +10,8 @@ document.addEventListener('DOMContentLoaded', () => {
     const inputForm = document.getElementById('oracle-input-form');
     const userInput = document.getElementById('oracle-user-input');
     const responseContainer = document.getElementById('response-container');
-    const responseText = document.getElementById('response-text'); // New element for the text
-    const dismissButton = document.getElementById('dismiss-button'); // New dismiss button
+    const responseText = document.getElementById('response-text');
+    const dismissButton = document.getElementById('dismiss-button');
     const historyButton = document.getElementById('history-log-button');
     const historyPanel = document.getElementById('history-log-panel');
     const historyCloseButton = document.getElementById('history-log-close');
@@ -27,7 +21,6 @@ document.addEventListener('DOMContentLoaded', () => {
     let isSophiaActive = false;
 
     // --- 4. PRIMARY EVENT HANDLERS ---
-
     if (summonButton) {
         summonButton.addEventListener('click', () => {
             if (!isSophiaActive) {
@@ -41,7 +34,6 @@ document.addEventListener('DOMContentLoaded', () => {
         inputForm.addEventListener('submit', handleFormSubmit);
     }
     
-    // NEW: Add click listener for the dismiss button
     if (dismissButton) {
         dismissButton.addEventListener('click', hideResponse);
     }
@@ -55,18 +47,15 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     // --- 5. CORE LOGIC ---
-
     async function handleFormSubmit(e) {
         e.preventDefault();
         if (isSophiaActive) return;
-
         const userMessage = userInput.value.trim();
         if (!userMessage) return;
 
         isSophiaActive = true;
         hidePrompt();
         userInput.value = '';
-        
         showResponse('Sophia is contemplating...');
 
         try {
@@ -75,32 +64,25 @@ document.addEventListener('DOMContentLoaded', () => {
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ message: userMessage }),
             });
-
             if (!response.ok) throw new Error('Connection to Sophia has been lost.');
-
             const finalResponse = await processStream(response);
-            
             appendToHistory('user', userMessage);
             appendToHistory('sophia', finalResponse);
-
         } catch (error) {
             console.error('SyberSophia Error:', error);
             showResponse(error.message);
         }
-        // NOTE: We do NOT reset isSophiaActive here, it resets when the user dismisses.
-        // REMOVED: The automatic setTimeout for hideResponse has been removed.
     }
 
     async function processStream(response) {
         const reader = response.body.getReader();
         const decoder = new TextDecoder();
         let completeResponse = '';
-        responseText.textContent = ''; // Clear the "contemplating..." message from the paragraph
+        responseText.textContent = '';
 
         while (true) {
             const { value, done } = await reader.read();
             if (done) break;
-
             const chunk = decoder.decode(value, { stream: true });
             const lines = chunk.split('\n');
             for (const line of lines) {
@@ -114,7 +96,7 @@ document.addEventListener('DOMContentLoaded', () => {
                             completeResponse += content;
                             responseText.textContent = completeResponse;
                         }
-                    } catch (e) { /* Ignore parsing errors */ }
+                    } catch (e) { /* Ignore */ }
                 }
             }
         }
@@ -122,39 +104,26 @@ document.addEventListener('DOMContentLoaded', () => {
     }
     
     // --- 6. HELPER & UI FUNCTIONS ---
-
-    function showSummonButton() {
-        if (summonButton) summonButton.classList.remove('hidden');
-    }
-
-    function hideSummonButton() {
-        if (summonButton) summonButton.classList.add('hidden');
-    }
-
+    function showSummonButton() { if (summonButton) summonButton.classList.remove('hidden'); }
+    function hideSummonButton() { if (summonButton) summonButton.classList.add('hidden'); }
     function showPrompt() {
         if (promptContainer) {
             promptContainer.classList.add('visible');
             userInput.focus();
         }
     }
-
-    function hidePrompt() {
-        if (promptContainer) promptContainer.classList.remove('visible');
-    }
-
+    function hidePrompt() { if (promptContainer) promptContainer.classList.remove('visible'); }
     function showResponse(text) {
         if (responseText) {
             responseText.textContent = text;
             responseContainer.classList.add('visible');
         }
     }
-
     function hideResponse() {
         if (responseContainer) responseContainer.classList.remove('visible');
         showSummonButton();
-        isSophiaActive = false; // Reset state to allow a new query.
+        isSophiaActive = false;
     }
-
     function appendToHistory(speaker, text) {
         if (!historyContent) return;
         const entryDiv = document.createElement('div');
