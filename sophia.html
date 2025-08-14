@@ -33,54 +33,78 @@
             transition: transform 0.15s ease-out;
             z-index: 9999;
         }
-        
-        #sybersophia-full-interface {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%); /* Center the window */
-            width: 90%;
-            max-width: 600px; /* Make it wider for a full-screen view */
-            height: 70vh;
-            background-color: rgba(16, 21, 36, 0.75); /* Semi-transparent background */
-            backdrop-filter: blur(10px); /* Glassmorphism effect */
-            border: 1px solid rgba(135, 206, 235, 0.2);
-            border-radius: 12px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
-            z-index: 10;
-
-            /* Re-use your flexbox layout from before */
-            display: flex;
-            flex-direction: column;
+        #home-logo {
+            position: fixed;
+            top: 25px;
+            left: 30px;
+            color: white;
+            text-decoration: none;
+            font-family: 'Space Grotesk', sans-serif; /* A font from your main site */
+            font-weight: 500;
+            font-size: 1.2rem;
+            opacity: 0.6;
+            z-index: 110;
+            transition: opacity 0.3s ease;
         }
-        .ephemeral {
-            position: absolute;
-            text-align: center;
-            width: 80%;
-            max-width: 700px;
-            left: 50%;
-            transform: translateX(-50%);
-            opacity: 0; /* Hidden by default */
-            transition: opacity 1.5s ease-in-out;
-            pointer-events: none; /* Can't interact with when hidden */
-        }
-
-        .ephemeral.visible {
+        #home-logo:hover {
             opacity: 1;
-            pointer-events: all;
         }
 
-        #prompt-container {
-            bottom: 10%;
+        #history-log-button {
+            position: fixed;
+            top: 20px;
+            right: 25px;
+            background: none;
+            border: none;
+            font-size: 2rem;
+            color: white;
+            opacity: 0.6;
+            cursor: pointer;
+            z-index: 110;
+            transition: opacity 0.3s ease, transform 0.3s ease;
         }
+        #history-log-button:hover {
+            opacity: 1;
+            transform: scale(1.1);
+        }
+        
+    .ephemeral {
+        position: absolute;
+        left: 50%; /* This centers the element's left edge */
+        transform: translateX(-50%); /* This shifts it back by half its own width */
+        text-align: center;
+        opacity: 0;
+        pointer-events: none;
+        transition: opacity 1.5s ease-in-out;
+    }
+    .ephemeral.visible { 
+        opacity: 1; 
+        pointer-events: all; 
+    }
 
-        #response-container {
-            top: 50%;
-            transform: translate(-50%, -50%);
-            font-size: 1.5rem;
-            color: #e0e0e0;
-            text-shadow: 0 0 15px rgba(135, 206, 235, 0.7);
-        }
+    #prompt-container {
+        bottom: 10%;
+        padding: 1rem;
+        background-color: rgba(255, 255, 255, 0.08);
+        backdrop-filter: blur(10px);
+        border: 1px solid rgba(255, 255, 255, 0.2);
+        border-radius: 16px;
+        box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+    }
+
+    #response-container {
+        top: 50%;
+        /* The Y-transform is added here to vertically center it */
+        transform: translate(-50%, -50%); 
+        width: 90%;
+        max-width: 650px;
+        padding: 2.5rem;
+        background-color: rgba(16, 21, 36, 0.7);
+        backdrop-filter: blur(12px);
+        border: 1px solid rgba(135, 206, 235, 0.2);
+        border-radius: 16px;
+        box-shadow: 0 4px 30px rgba(0, 0, 0, 0.2);
+    }
 
         /* sophia.html <style> tag */
 
@@ -116,7 +140,7 @@
             backdrop-filter: blur(12px);
             border-left: 1px solid rgba(135, 206, 235, 0.2);
             box-shadow: -5px 0 30px rgba(0, 0, 0, 0.3);
-            z-index: 100;
+            z-index: 110;
 
             display: flex;
             flex-direction: column;
@@ -315,6 +339,7 @@
     </style>
 </head>
 <body>
+    <a href="index.html" id="home-logo" title="Return to SyberLabs Home">SyberLabs</a>
     <canvas id="oracle"></canvas>
     <div id="oracle-cursor"></div>
 
@@ -343,7 +368,6 @@
 
 
     <script src="netlify/oracle.js"></script> 
-    <script src="script.js"></script> 
     <script>
         const canvas = document.getElementById('oracle');
         const ctx = canvas.getContext('2d');
