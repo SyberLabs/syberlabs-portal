@@ -12,6 +12,7 @@
     <meta name="twitter:card" content="summary_large_image">
 
     <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="netlify/oracle.css">
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -225,13 +226,24 @@
         </div>
     </footer>
 
-    <div class="consciousness-meter" id="consciousnessMeter">
-        <div class="meter-label">Consciousness Expansion Level</div>
-        <div class="meter-bar">
-            <div class="meter-fill" id="meterFill"></div>
+  
+    <div id="consciousness-oracle-widget">
+        <div id="oracle-chat-window" class="oracle-hidden">
+            <header class="oracle-header">
+                <h2>Sophia: Ask the Deeper Question.</h2>
+            </header>
+            <main id="oracle-message-display" class="oracle-message-area"></main>
+            <footer class="oracle-footer">
+                <form id="oracle-input-form">
+                    <input type="text" id="oracle-user-input" placeholder="Pose a query..." autocomplete="off" required>
+                </form>
+            </footer>
         </div>
+        <button id="oracle-toggle-button" type="button" aria-label="Open SyberSophia">
+            🌌
+        </button>
     </div>
-
+    <script src="netlify/widget.js"></script>
     <script src="script.js"></script>
 </body>
 </html>

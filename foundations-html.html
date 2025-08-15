@@ -13,6 +13,7 @@
     <!-- Stylesheets -->
     <link rel="stylesheet" href="styles.css">
     <link rel="stylesheet" href="foundation-docs-theme.css">
+    <link rel="stylesheet" href="netlify/oracle.css">
 </head>
 <body class="cct-theme foundations-page">
     <!-- Navigation (copied from index.html structure) -->
@@ -169,6 +170,22 @@
                 
             </div>
         </section>
+        <div id="consciousness-oracle-widget">
+            <div id="oracle-chat-window" class="oracle-hidden">
+                <header class="oracle-header">
+                    <h2>Sophia: Ask the Deeper Question.</h2>
+                </header>
+                <main id="oracle-message-display" class="oracle-message-area"></main>
+                <footer class="oracle-footer">
+                    <form id="oracle-input-form">
+                        <input type="text" id="oracle-user-input" placeholder="Pose a query..." autocomplete="off" required>
+                    </form>
+                </footer>
+            </div>
+            <button id="oracle-toggle-button" type="button" aria-label="Open SyberSophia">
+                🌌
+            </button>
+        </div>
     </main>
 
     <!-- Footer -->
@@ -251,6 +268,6 @@
             });
         });
 </script>
-    </script>
+    <script src="netlify/widget.js"></script>
 </body>
 </html>

@@ -8,6 +8,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link rel="stylesheet" href="synthesizer.css">
+    <link rel="stylesheet" href="netlify/oracle.css">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Space+Grotesk:wght@300;400;500;600;700&family=Crimson+Text:ital@0;1&display=swap" rel="stylesheet">
 </head>
 
@@ -145,5 +146,22 @@
     </script>
     <script src="script.js"></script>
     <script src="synthesizer.js"></script>
+    <script src="netlify/widget.js"></script>
+    <div id="consciousness-oracle-widget">
+        <div id="oracle-chat-window" class="oracle-hidden">
+            <header class="oracle-header">
+                <h2>Sophia: Ask the Deeper Question.</h2>
+            </header>
+            <main id="oracle-message-display" class="oracle-message-area"></main>
+            <footer class="oracle-footer">
+                <form id="oracle-input-form">
+                    <input type="text" id="oracle-user-input" placeholder="Pose a query..." autocomplete="off" required>
+                </form>
+            </footer>
+        </div>
+        <button id="oracle-toggle-button" type="button" aria-label="Open SyberSophia">
+            🌌
+        </button>
+    </div>
 </body>
 </html>
