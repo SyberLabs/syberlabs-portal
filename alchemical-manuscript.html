@@ -242,9 +242,40 @@
                 padding: 30px 20px;
             }
         }
+        /* --- Top-Level UI (Logos & Buttons) --- */
+        #home-logo {
+            position: fixed;
+            top: 25px;
+            left: 30px;
+            color: white;
+            text-decoration: none;
+            font-family: 'Space Grotesk', sans-serif;
+            font-weight: 500;
+            font-size: 1.2rem;
+            opacity: 0.6;
+            z-index: 110;
+            transition: opacity 0.3s ease;
+        }
+        #home-logo:hover { opacity: 1; }
+
+        #history-log-button {
+            position: fixed;
+            top: 20px;
+            right: 25px;
+            background: none;
+            border: none;
+            font-size: 2rem;
+            color: white;
+            opacity: 0.6;
+            cursor: pointer;
+            z-index: 110;
+            transition: opacity 0.3s ease, transform 0.3s ease;
+        }
+        #history-log-button:hover { opacity: 1; transform: scale(1.1); }
     </style>
 </head>
 <body>
+    <a href="index.html" id="home-logo" title="Return to SyberLabs Home">SyberLabs</a>
     <div class="container">
         <header>
             <h1>The Alchemical Forge</h1>
